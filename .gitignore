@@ -1,4 +1,5 @@
 /.idea
+/database
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
