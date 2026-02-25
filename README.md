@@ -24,9 +24,9 @@ Il vous est demandé de mettre à jour et corriger son site. Vous remplacez la p
 
 ### SetUp Docker (déjà prêt):
 
-PHP 8.2 + Composer + Nginx + PostgresSQL + pgAdmin
-Site : http://localhost:8081
-pgAdmin : http://localhost:8080/
+- PHP 8.2 + Composer + Nginx + PostgresSQL + pgAdmin
+- Site : http://localhost:8081
+- pgAdmin : http://localhost:8080/
 
 ## ✅ Installation
 
@@ -97,8 +97,9 @@ docker compose exec php php bin/console doctrine:migrations:migrate -n
 
 ### 8. Importer les données SQL (anonymisées):
 
-Le docker-compose.yml monte le dossier /sql dans le conteneur Postgres à partir du dossier ./database (les fichiers .sql des trois tables anonymisée doivent s'y trouver)
-Utiliser les .sql que je fourni. Les images ayant été passées dans xnConvert le lien des images a été changé pour .webp et non plus .jpg
+Le docker-compose.yml monte le dossier /sql dans le conteneur Postgres à partir du dossier ./database (les fichiers .sql des trois tables anonymisée doivent s'y trouver).
+Utiliser les .sql que je fourni. Les images ayant été passées dans xnConvert le lien des images a été changé (.webp et non plus .jpg).
+
 Excecutez ces commandes dans l'ordre indiqué (pour éviter un problème de Foreign Key)
 
 ```bash
