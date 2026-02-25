@@ -1,0 +1,33 @@
+<?php
+
+namespace App\DataFixtures;
+
+use App\Entity\User;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+
+class UserFixtures extends Fixture
+{
+    public function load(ObjectManager $manager): void
+    {
+        // Création du compte d'Ina Zaoui
+        $ina = new User();
+        $ina->setAdmin(true);
+        $ina->setName('Ina Zaoui');
+        $ina->setEmail('ina@zaoui.com');
+        $ina->setDescription(null);
+        $manager->persist($ina);
+
+        // Création de 10 autres utilisateurs
+        foreach (range(1, 10) as $i) {
+            $user = new User();
+            $user->setAdmin(false);
+            $user->setName(sprintf('Invité %d', $i));
+            $user->setEmail(sprintf('invite+%d@example.com', $i));
+            $user->setDescription("Le maître de l'urbanité capturée, explore les méandres des cités avec un regard vif et impétueux, figeant l'énergie des rues dans des instants éblouissants. À travers une technique avant-gardiste, il métamorphose le béton et l'acier en toiles abstraites, révélant l'essence même de l'architecture moderne. Ses clichés transcendent les formes familières pour révéler des perspectives inattendues, offrant une vision nouvelle et captivante du monde urbain.");
+            $manager->persist($user);
+        }
+
+        $manager->flush();
+    }
+}
