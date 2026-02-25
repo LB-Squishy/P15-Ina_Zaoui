@@ -1,6 +1,9 @@
+<img src="public/images/name.png" alt="InaZaoui" width="200" />
+
 # Ina Zaoui
 
 Pour se connecter avec le compte de Ina, il faut utiliser les identifiants suivants:
+
 - identifiant : `ina`
 - mot de passe : `password`
 
