@@ -1,4 +1,4 @@
-<img src="public/images/name.png" alt="InaZaoui" width="200" />[![forthebadge](/badges/powered-by-coffee.svg)](https://forthebadge.com)[![forthebadge](/badges/docker-container.svg)](https://forthebadge.com)
+<img src="public/images/name.png" alt="InaZaoui" width="300" />
 
 # Ina Zaoui : Refactorisez le code d'un site pour l'optimiser
 
