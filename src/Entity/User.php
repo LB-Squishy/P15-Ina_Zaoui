@@ -6,10 +6,18 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', columns: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 #[ORM\Table(name: '`user`')]
-class User
+#[ORM\HasLifecycleCallbacks]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,13 +28,37 @@ class User
     private bool $admin = false;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le nom ne peut pas être vide.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $name;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\Length(
+        max: 1000,
+        maxMessage: 'La description ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $description;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(message: 'L\'email est obligatoire.')]
+    #[Assert\Email(message: 'L\'email "{{ value }}" n\'est pas valide.')]
+    #[Assert\Length(
+        max: 180,
+        maxMessage: 'L\'email ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $email = null;
+
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'user')]
     private Collection $medias;
@@ -34,6 +66,20 @@ class User
     public function __construct()
     {
         $this->medias = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
     }
 
     public function getId(): ?int
@@ -92,4 +138,56 @@ class User
     {
         $this->admin = $admin;
     }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = ['ROLE_USER'];
+        if ($this->isAdmin()) {
+            $roles[] = 'ROLE_ADMIN';
+        }
+        return array_unique($roles);
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function eraseCredentials(): void {}
 }
