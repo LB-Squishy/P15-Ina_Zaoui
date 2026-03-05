@@ -126,7 +126,7 @@ docker compose up -d
 
 Pour se connecter avec le compte de Ina:
 
-- identifiant : `ina`
+- email : `ina@zaoui.com`
 - mot de passe : `password`
 
 ### 3. Arrêter le projet:
