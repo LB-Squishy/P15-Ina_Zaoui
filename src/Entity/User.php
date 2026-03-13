@@ -142,7 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->admin = $admin;
     }
 
-    public function haveAcces(): bool
+    public function isAcces(): bool
     {
         return $this->acces;
     }
@@ -194,7 +194,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->isAdmin()) {
             $roles[] = 'ROLE_ADMIN';
         }
-        if ($this->haveAcces()) {
+        if ($this->isAcces()) {
             $roles[] = 'ROLE_ACCES';
         }
         return array_unique($roles);
