@@ -25,7 +25,7 @@ class MediaType extends AbstractType
             ])
         ;
 
-        if ($options['is_admin']) {
+        if ($options['is_super_admin']) {
             $builder
                 ->add('user', EntityType::class, [
                     'label' => 'Utilisateur',
@@ -47,7 +47,7 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Media::class,
-            'is_admin' => false,
+            'is_super_admin' => false,
         ]);
     }
 }

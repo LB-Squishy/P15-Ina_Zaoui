@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 {% for a in albums %}
-                    <div class="col-2">
+                    <div class="col-2 mb-4">
                         <a class="btn w-100 py-3 {{ album == a ? 'active' }}" href="{{ path('portfolio', {id: a.id}) }}">
                             {{ a.name }}
                         </a>

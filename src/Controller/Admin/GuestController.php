@@ -23,7 +23,7 @@ final class GuestController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
 
-        $criteria = ['admin' => false];
+        $criteria = ['super_admin' => false];
 
         $guests = $this->userRepository->findBy(
             $criteria,
@@ -49,7 +49,7 @@ final class GuestController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $guest->setPassword(password_hash($form->get('plainPassword')->getData(), PASSWORD_BCRYPT));
-            $guest->setAdmin(false);
+            $guest->setSuperAdmin(false);
             $this->entityManager->persist($guest);
             $this->entityManager->flush();
 
@@ -63,7 +63,7 @@ final class GuestController extends AbstractController
     public function update(int $id)
     {
         $guest = $this->userRepository->find($id);
-        $guest->setAcces(!$guest->isAcces());
+        $guest->setAdmin(!$guest->isAdmin());
         $this->entityManager->persist($guest);
         $this->entityManager->flush();
 

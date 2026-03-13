@@ -25,7 +25,7 @@ class MediaController extends AbstractController
 
         $criteria = [];
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
             $criteria['user'] = $this->getUser();
         }
 
@@ -48,11 +48,11 @@ class MediaController extends AbstractController
     public function add(Request $request)
     {
         $media = new Media();
-        $form = $this->createForm(MediaType::class, $media, ['is_admin' => $this->isGranted('ROLE_ADMIN')]);
+        $form = $this->createForm(MediaType::class, $media, ['is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$this->isGranted('ROLE_ADMIN')) {
+            if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
                 $media->setUser($this->getUser());
             }
             $media->setPath('uploads/' . md5(uniqid()) . '.' . $media->getFile()->guessExtension());
@@ -70,7 +70,7 @@ class MediaController extends AbstractController
     public function delete(int $id)
     {
         $media = $this->mediaRepository->find($id);
-        if (!$this->isGranted('ROLE_ADMIN') && $media->getUser() !== $this->getUser()) {
+        if (!$this->isGranted('ROLE_SUPER_ADMIN') && $media->getUser() !== $this->getUser()) {
             throw $this->createAccessDeniedException();
         }
         $this->entityManager->remove($media);

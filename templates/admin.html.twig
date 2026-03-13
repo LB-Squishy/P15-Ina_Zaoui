@@ -14,7 +14,7 @@
                                 Medias
                             </a>
                         </li>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('admin_album_index') }}">
                                     Albums

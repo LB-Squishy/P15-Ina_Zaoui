@@ -36,7 +36,7 @@ class GuestType extends AbstractType
                 'mapped' => false,
                 'required' => true,
             ])
-            ->add('acces', CheckboxType::class, [
+            ->add('admin', CheckboxType::class, [
                 'label' => 'Accès Admin',
                 'required' => false,
             ])
