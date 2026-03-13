@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ina Zaoui - Erreur serveur{% endblock %}
+
+{# 
+Ne s'affiche qu'en production, lorsque une page 500 est rencontrée. 
+Pour l'afficher 
+- allez sur l'url http://127.0.0.1:8081/_error/500 en dev,
+ou
+- passez en prod avec APP_ENV=prod apres compilation des assets. 
+#}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
+    <div class="text-center">
+        <h1 class="display-1 fw-light mb-4">500</h1>
+        <p class="h3 text-dark mb-3">Erreur serveur</p>
+        <p class="mb-4">Une erreur est survenue sur le serveur. Veuillez réessayer plus tard.</p>
+        <a href="{{ path('home') }}" class="btn btn-dark btn-lg">Retour à l'accueil</a>
+    </div>
+</section>
+{% endblock %}

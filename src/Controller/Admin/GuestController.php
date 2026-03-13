@@ -74,6 +74,12 @@ final class GuestController extends AbstractController
     public function delete(int $id)
     {
         $guest = $this->userRepository->find($id);
+        $guestsMedias = $guest->getMedias();
+
+        foreach ($guestsMedias as $media) {
+            unlink($media->getPath());
+        }
+
         $this->entityManager->remove($guest);
         $this->entityManager->flush();
 
