@@ -27,6 +27,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $admin = false;
 
+    #[ORM\Column(options: ['default' => true])]
+    private bool $acces = true;
+
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Le nom ne peut pas être vide.')]
     #[Assert\Length(
@@ -139,6 +142,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->admin = $admin;
     }
 
+    public function haveAcces(): bool
+    {
+        return $this->acces;
+    }
+
+    public function setAcces(bool $acces): void
+    {
+        $this->acces = $acces;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -180,6 +193,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = ['ROLE_USER'];
         if ($this->isAdmin()) {
             $roles[] = 'ROLE_ADMIN';
+        }
+        if ($this->haveAcces()) {
+            $roles[] = 'ROLE_ACCES';
         }
         return array_unique($roles);
     }
