@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ina Zaoui - Page Not Found{% endblock %}
+{% block title %}Ina Zaoui - Accès refusé{% endblock %}
 
 {# 
 Ne s'affiche qu'en production, lorsque une page 404 est rencontrée. 
@@ -13,9 +13,9 @@ ou
 {% block body %}
 <div class="container d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
     <div class="text-center">
-        <h1 class="display-1 fw-light mb-4">404</h1>
-        <p class="h3 text-dark mb-3">Not Found</p>
-        <p class="mb-4">La page que vous recherchez n'existe pas ou a été déplacée.</p>
+        <h1 class="display-1 fw-light mb-4">403</h1>
+        <p class="h3 text-dark mb-3">Accès refusé</p>
+        <p class="mb-4">Vous n'avez pas ou plus les permissions nécessaires pour accéder à cette page.</p>
         <a href="{{ path('home') }}" class="btn btn-dark btn-lg">Retour à l'accueil</a>
     </div>
 </div>
