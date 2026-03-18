@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ina Zaoui - Erreur{% endblock %}
+
+{# 
+Ne s'affiche qu'en production, lorsque une erreur est rencontrée. 
+Pour l'afficher 
+- allez sur l'url http://127.0.0.1:8081/_error/408 en dev ou autres code erreur pour toutes les erreurs non gérées spécifiquement,
+ou
+- passez en prod avec APP_ENV=prod apres compilation des assets. 
+#}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
+    <div class="text-center">
+        <h1 class="display-1 fw-light mb-4">Oups !</h1>
+        <p class="h3 text-dark mb-3">Une erreur est survenue</p>
+        <p class="mb-4">Nous rencontrons actuellement un problème technique. Veuillez réessayer plus tard.</p>
+        <a href="{{ path('home') }}" class="btn btn-dark btn-lg">Retour à l'accueil</a>
+    </div>
+</div>
+{% endblock %}

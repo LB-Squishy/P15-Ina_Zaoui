@@ -25,7 +25,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column]
-    private bool $admin = false;
+    private bool $super_admin = false;
+
+    #[ORM\Column(options: ['default' => true])]
+    private bool $admin = true;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Le nom ne peut pas être vide.')]
@@ -60,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'user', orphanRemoval: true, cascade: ['remove'])]
     private Collection $medias;
 
     public function __construct()
@@ -129,6 +132,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->medias = $medias;
     }
 
+    public function isSuperAdmin(): bool
+    {
+        return $this->super_admin;
+    }
+
+    public function setSuperAdmin(bool $super_admin): void
+    {
+        $this->super_admin = $super_admin;
+    }
+
     public function isAdmin(): bool
     {
         return $this->admin;
@@ -178,6 +191,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = ['ROLE_USER'];
+        if ($this->isSuperAdmin()) {
+            $roles[] = 'ROLE_SUPER_ADMIN';
+        }
         if ($this->isAdmin()) {
             $roles[] = 'ROLE_ADMIN';
         }

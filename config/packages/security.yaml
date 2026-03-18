@@ -22,11 +22,12 @@ security:
                 path: admin_logout
                 target: home
     role_hierarchy:
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
         ROLE_ADMIN: ROLE_USER
     access_control:
-        - { path: ^/admin/invite, roles: ROLE_ADMIN }
-        - { path: ^/admin/album, roles: ROLE_ADMIN }
-        - { path: ^/admin, roles: ROLE_USER }
+        - { path: ^/admin/invite, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin/album, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:
