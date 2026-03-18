@@ -16,13 +16,13 @@ Il vous est demandé de mettre à jour et corriger son site. Vous remplacez la p
 - la rédaction de la documentation
 - la mise en place d'une pipeline d'intégration continue
 
-### Prérequis:
+## ✅ Prérequis:
 
 - Docker Desktop installé et lancé
 - Git
 - VS Code + extension Docker
 
-### SetUp Docker (déjà prêt):
+## ✅ SetUp Docker (déjà prêt):
 
 - PHP 8.2 + Composer + Nginx + PostgresSQL + pgAdmin
 - Site : http://localhost:8081
@@ -45,7 +45,7 @@ Afin de limiter le poid des commit, les images sont fournies via **GitHub Releas
 - Téléchargez le dossier compressé depuis: https://github.com/LB-Squishy/P15-Ina_Zaoui/releases/download/v1.0.0/uploads.zip
 - Décompressez le contenu du dossier vers 'public/uploads'
 
-### 3. Configurer la DB:
+### 3. Configurer la DB principale:
 
 Créez le .env.local à la racine (dans docker, l'hôte est postgres et non 127.0.0.1) :
 
@@ -53,30 +53,74 @@ Créez le .env.local à la racine (dans docker, l'hôte est postgres et non 127.
 DATABASE_URL="postgresql://postgres:postgres@postgres:5432/ina_zaoui?serverVersion=16&charset=utf8"
 ```
 
-### 4. Construire les images Docker:
+### 4. Configurer la DB test:
+
+Créez le .env.test.local à la racine (dans docker, l'hôte est postgres et non 127.0.0.1) :
+
+```bash
+DATABASE_URL="postgresql://postgres:postgres@postgres:5432/ina_zaoui?serverVersion=16&charset=utf8"
+```
+
+### 5. Construire les images Docker:
 
 ```bash
 docker compose up -d --build
 ```
 
-### 5. Installer les dépendances:
+### 6. Installer les dépendances:
 
 ```bash
 docker compose exec php composer install
 ```
 
-### 6. pgAdmin: se connecter au serveur Postgres
+## ✅ Base de donnée
 
-**(pour un projet réél utilisez un gestionnaire de mdp pour transmettre les logs):**
+### 1. Créer et alimenter la DB principale:
+
+**Cette commande faisant un drop par sécurité veillez à couper toutes éventuelle connexion à cette base si elle existe déjà**
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+**Puis:**
+
+```bash
+docker compose exec php composer db:reset
+```
+
+_Note : Cette commande comprend un drop de la table si existante, sa creation, la migration ainsi que son alimentation à partir des fixtures (cf. section scripts utiles ci-dessous ou fichier composer.json)_
+
+### 2. Créer et alimenter la DB test:
+
+**Cette commande faisant un drop par sécurité veillez à couper toutes éventuelle connexion à cette base si elle existe déjà**
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+**Puis:**
+
+```bash
+docker compose exec php composer db:test:reset
+```
+
+_Note : Cette commande comprend un drop de la table test si existante, sa creation, la migration ainsi que son alimentation à partir des fixtures (cf. section scripts utiles ci-dessous ou fichier composer.json)_
+
+## ✅ pgAdmin(optionnel): se connecter au serveur Postgres
+
+_Note : (pour un projet réél utilisez un gestionnaire de mdp pour transmettre les logs)_
 
 Ouvrez pgAdmin : http://localhost:8080/
 
-**Identifiants:**
+### 1. Identifiants:
 
 - Email : admin@admin.com
 - Mot de passe : admin
 
-**Ajouter un serveur:**
+### 2. Ajouter un serveur:
 
 - Dans pgAdmin => "Ajouter un serveur"
 - Onglet "General":
@@ -89,26 +133,7 @@ Ouvrez pgAdmin : http://localhost:8080/
     - Mot de passe : postgres
     - "Cocher enregistrer le mdp"
 
-### 7. Créer les tables (migration):
-
-```bash
-docker compose exec php php bin/console doctrine:migrations:migrate -n
-```
-
-### 8. Importer les données SQL (anonymisées):
-
-Le docker-compose.yml monte le dossier /sql dans le conteneur Postgres à partir du dossier ./database (les fichiers .sql des trois tables anonymisée doivent s'y trouver).
-Utiliser les .sql que je fourni. Les images ayant été passées dans xnConvert le lien des images a été changé (.webp et non plus .jpg).
-
-Excecutez ces commandes dans l'ordre indiqué (pour éviter un problème de Foreign Key)
-
-```bash
-docker compose exec -T postgres psql -U postgres -d ina_zaoui -v ON_ERROR_STOP=1 -f /sql/01_user.sql
-docker compose exec -T postgres psql -U postgres -d ina_zaoui -v ON_ERROR_STOP=1 -f /sql/02_album.sql
-docker compose exec -T postgres psql -U postgres -d ina_zaoui -v ON_ERROR_STOP=1 -f /sql/03_media.sql
-```
-
-## ✅ Usage
+## ✅ Utilisation courante
 
 ### 1. Démarrer le projet:
 
@@ -119,20 +144,60 @@ docker compose exec -T postgres psql -U postgres -d ina_zaoui -v ON_ERROR_STOP=1
 docker compose up -d
 ```
 
-3. Ouvrez pgAdmin: http://localhost:8080/
-4. Ouvrez le Site : http://localhost:8081
+### 2. Accéder au projet:
 
-### 2. Connexion:
+1. Ouvrez pgAdmin: http://localhost:8080/
+2. Ouvrez le Site : http://localhost:8081
+
+### 3. Connexion admin d'Ina Zoui:
+
+_Note : (pour un projet réél utilisez un gestionnaire de mdp pour transmettre les logs)_
 
 Pour se connecter avec le compte de Ina:
 
 - email : `ina@zaoui.com`
 - mot de passe : `password`
 
-### 3. Arrêter le projet:
+### 4. Arrêter le projet:
 
 ```bash
 docker compose down
+```
+
+## ✅ Scripts Utiles (Composer)
+
+_Note : Utilisant Docker, pensez à ajouter "docker compose exec php composer"_
+
+```bash
+docker compose exec php composer
+```
+
+### 1. Manipulation de la DB
+
+**Base Principale:**
+
+```bash
+docker compose exec php composer db:drop
+docker compose exec php composer db:create
+docker compose exec php composer db:migrate
+docker compose exec php composer db:fixtures
+```
+
+```bash
+docker compose exec php composer db:reset
+```
+
+**Base de Test:**
+
+```bash
+docker compose exec php composer db:test:drop
+docker compose exec php composer db:test:create
+docker compose exec php composer db:test:migrate
+docker compose exec php composer db:test:fixtures
+```
+
+```bash
+docker compose exec php composer db:test:reset
 ```
 
 ## ✅ Tests
