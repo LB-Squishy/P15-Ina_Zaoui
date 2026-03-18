@@ -201,3 +201,19 @@ docker compose exec php composer db:test:reset
 ```
 
 ## ✅ Tests
+
+### 1. Rapport de couverture de code
+
+**Générer le rapport**
+
+```bash
+docker compose exec -e XDEBUG_MODE=coverage php vendor/bin/phpunit --coverage-html public/test-coverage
+```
+
+_Note : Le rapport doit être regénéré après chaque modification du code ou des tests._
+
+**Ouvrir le rapport dans le navigateur**
+
+```bash
+start ./public/test-coverage/index.html
+```
