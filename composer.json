@@ -114,7 +114,7 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^8.2",
         "doctrine/doctrine-fixtures-bundle": "^3.6",
-        "phpunit/phpunit": "^11",
+        "phpunit/phpunit": "^12.5",
         "symfony/browser-kit": "*",
         "symfony/css-selector": "*",
         "symfony/debug-bundle": "*",

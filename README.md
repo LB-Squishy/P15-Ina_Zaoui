@@ -22,9 +22,17 @@ Il vous est demandé de mettre à jour et corriger son site. Vous remplacez la p
 - Git
 - VS Code + extension Docker
 
-## ✅ SetUp Docker (déjà prêt):
+## ✅ SetUp Docker:
 
-- PHP 8.2 + Composer + Nginx + PostgresSQL + pgAdmin
+- Symfony 7.4
+- PHP 8.3
+- Composer
+- Nginx
+- PostgresSQL
+- pgAdmin
+
+## ✅ Accès:
+
 - Site : http://localhost:8081
 - pgAdmin : http://localhost:8080/
 
