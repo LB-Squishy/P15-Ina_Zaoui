@@ -29,6 +29,7 @@ services:
         working_dir: /var/www/html
         volumes:
             - ./:/var/www/html
+            - php_var:/var/www/html/var
         depends_on:
             - postgres
     nginx:
@@ -44,3 +45,4 @@ services:
 volumes:
     postgres_db:
     pgadmin_data:
+    php_var:
