@@ -23,50 +23,70 @@ concurrency:
 
 jobs:
     build:
+        name: Construction de l'environnement de test
+        runs-on: ubuntu-latest
+
+        services:
+            postgres:
+                image: postgres:16
+                env:
+                    POSTGRES_DB: ina_zaoui
+                    POSTGRES_USER: postgres
+                    POSTGRES_PASSWORD: postgres
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd="pg_isready -U postgres -d ina_zaoui"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=3
+
         env:
-            # Set the environment variable to enable code coverage in tests
             APP_ENV: test
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        runs-on: ubuntu-latest
+
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+
             - name: Setup Pages
               uses: actions/configure-pages@v5
-            - name: Start Docker
-              run: docker compose up -d --build
-            - name: Wait for database
-              run: |
-                  until docker compose exec -T postgres pg_isready -U postgres; do
-                      echo "Postgres n'est pas encore prêt..."
-                      sleep 2
-                  done
-            - name: Install Composer dependencies
-              run: docker compose exec -T php composer install --no-progress --prefer-dist --no-interaction
-            - name: Preparer la base de donnée de test
-              run: docker compose exec -T php composer db:test:reset
+
+            - name: Installation de PHP et des extensions
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+                  extensions: mbstring, pdo, pdo_pgsql, xdebug, intl, zip
+                  coverage: xdebug
+
+            - name: Installer Composer
+              run: composer install --prefer-dist --no-progress --no-interaction
+
+            - name: Préparer la base de données de test
+              run: composer db:test:reset
+
             - name: Mise à propre du dossier de test-coverage
               run: |
                   rm -rf public/test-coverage
                   mkdir -p public/test-coverage
+
             - name: Generer le rapport de couverture de code
-              run: docker compose exec -T -e XDEBUG_MODE=coverage php composer test:coverage
+              run: XDEBUG_MODE=coverage composer test:coverage
+
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v4
               with:
-                  # Upload entire repository
                   path: "./public/test-coverage"
-            - name: Stopper Docker
-              if: always()
-              run: docker compose down -v
 
-    # Single deploy job since we're just deploying
     deploy:
+        name: Déploiement de la page "test-coverage"
         needs: build
+        runs-on: ubuntu-latest
+
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
-        runs-on: ubuntu-latest
+
         steps:
             - name: Deploy to GitHub Pages
               id: deployment
