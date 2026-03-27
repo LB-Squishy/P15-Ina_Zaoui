@@ -112,7 +112,7 @@ class PortfolioControllerTest extends FunctionalTestCase
             // Récupère les médias attendus et affichés pour l'album
             $expectedMedias = $this
                 ->service(MediaRepository::class)
-                ->findBy(['album' => $album], ['id' => 'ASC']);
+                ->findBy(['album' => $album]);
             $medias = $albumCrawler
                 ->filter('.media img');
 
