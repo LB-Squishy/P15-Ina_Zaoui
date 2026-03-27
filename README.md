@@ -119,7 +119,7 @@ _Note : Cette commande comprend un drop de la table test si existante, sa creati
 
 ## ✅ pgAdmin(optionnel): se connecter au serveur Postgres
 
-_Note : (pour un projet réél utilisez un gestionnaire de mdp pour transmettre les logs)_
+_Note : (pour un projet réél utilisez un gestionnaire de mdp pour transmettre les logs et les générer)_
 
 Ouvrez pgAdmin : http://localhost:8080/
 
@@ -157,13 +157,23 @@ docker compose up -d
 1. Ouvrez pgAdmin: http://localhost:8080/
 2. Ouvrez le Site : http://localhost:8081
 
-### 3. Connexion admin d'Ina Zoui:
+### 3. Connexion à l'admin:
 
-_Note : (pour un projet réél utilisez un gestionnaire de mdp pour transmettre les logs)_
+_Note : (pour un projet réél utilisez un gestionnaire de mdp pour transmettre les logs et les générer)_
 
-Pour se connecter avec le compte de Ina:
+Pour se connecter avec le compte de Ina(SUPER_ADMIN):
 
 - email : `ina@zaoui.com`
+- mot de passe : `password`
+
+Pour se connecter avec le compte de l'invité 2(ADMIN accès activé):
+
+- email : `invite+2@example.com`
+- mot de passe : `password`
+
+Pour se connecter avec le compte de l'invité 1(ADMIN accès desactivé):
+
+- email : `invite+1@example.com`
 - mot de passe : `password`
 
 ### 4. Arrêter le projet:
@@ -215,7 +225,7 @@ docker compose exec php composer db:test:reset
 **Générer le rapport**
 
 ```bash
-docker compose exec -e XDEBUG_MODE=coverage php vendor/bin/phpunit --coverage-html public/test-coverage
+docker compose exec -e XDEBUG_MODE=coverage php composer test:coverage
 ```
 
 _Note : Le rapport doit être regénéré après chaque modification du code ou des tests._
