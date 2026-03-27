@@ -91,6 +91,12 @@
             "@db:test:migrate",
             "@db:test:fixtures"
         ],
+        "test:phpunit": "phpunit --testdox --colors=always",
+        "test:phpunit:ci": [
+            "@db:test:reset",
+            "@test:phpunit"
+        ],
+        "test:coverage": "phpunit --coverage-html=public/test-coverage",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
