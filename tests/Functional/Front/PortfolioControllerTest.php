@@ -30,6 +30,7 @@ class PortfolioControllerTest extends FunctionalTestCase
 
         // Récupère les liens d'album affichés
         $albums = $crawler->filter('div.mb-5 a.btn[href^="/portfolio/"]');
+        $this->assertGreaterThan(0, $albums->count(), 'Aucun album trouvé dans la page portfolio');
 
         // Récupère les albums attendus depuis la base de données
         $expectedAlbums = $this
@@ -49,6 +50,7 @@ class PortfolioControllerTest extends FunctionalTestCase
 
         // Récupère les medias affichés
         $medias = $crawler->filter('.media img');
+        $this->assertGreaterThan(0, $medias->count(), 'Aucun media trouvé dans la page portfolio');
 
         // Récupère les medias attendus depuis la base de données
         $ina = $this
@@ -66,11 +68,12 @@ class PortfolioControllerTest extends FunctionalTestCase
      */
     public function testBackToAllMediasIfBadAlbumId(): void
     {
-        $crawler = $this->get('/portfolio/9999');
+        $crawler = $this->get('/portfolio/9999999');
         $this->assertResponseIsSuccessful();
 
         // Récupère les medias affichés
         $medias = $crawler->filter('.media img');
+        $this->assertGreaterThan(0, $medias->count(), 'Aucun media trouvé dans la page portfolio');
 
         // Récupère les medias attendus depuis la base de données
         $ina = $this
@@ -85,8 +88,8 @@ class PortfolioControllerTest extends FunctionalTestCase
 
     /**
      * Test de l'affichage de tout les medias correspondant à un album sur la page /portfolio/{id}
-     * - de la correspondance des titres des médias affichés avec les titres attendus
      * - de la correspondance du nombre de médias affichés avec le nombre attendu
+     * - de la correspondance des titres des médias affichés avec les titres attendus
      */
     public function testShouldListGoodMediasFromAlbum(): void
     {
@@ -95,7 +98,7 @@ class PortfolioControllerTest extends FunctionalTestCase
 
         // Récupère les liens d'album affichés et vérifie qu'il y en a au moins un
         $links = $crawler->filter('div.mb-5 a.btn[href^="/portfolio/"]');
-        $this->assertGreaterThan(0, $links->count(), 'Aucun lien d\'album trouvé dans la page portfolio');
+        $this->assertGreaterThan(0, $links->count(), 'Aucun album trouvé dans la page portfolio');
 
         foreach ($links as $link) {
             /** @var \DOMElement $link */
@@ -116,6 +119,8 @@ class PortfolioControllerTest extends FunctionalTestCase
             $medias = $albumCrawler
                 ->filter('.media img');
 
+            $this->assertSame(count($expectedMedias), $medias->count(), 'Le nombre d\'images affichées pour l\'album ' . $album->getName() . ' ne correspond pas au nombre attendu.');
+
             // Récupère les titres des médias attendus et affichés
             $expectedTitles = [];
             foreach ($expectedMedias as $media) {
@@ -128,7 +133,6 @@ class PortfolioControllerTest extends FunctionalTestCase
                 $titles[] = $titleElement->textContent;
             }
 
-            $this->assertSame(count($expectedMedias), $medias->count(), 'Le nombre d\'images affichées pour l\'album ' . $album->getName() . ' ne correspond pas au nombre attendu.');
             $this->assertSame($expectedTitles, $titles, 'Les titres des images affichées pour l\'album ' . $album->getName() . ' ne correspondent pas aux titres attendus.');
         }
     }
