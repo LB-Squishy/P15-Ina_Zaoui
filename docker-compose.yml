@@ -30,6 +30,7 @@ services:
         volumes:
             - ./:/var/www/html
             - php_var:/var/www/html/var
+            - symfony_vendor:/var/www/html/vendor
         depends_on:
             - postgres
     nginx:
@@ -46,3 +47,4 @@ volumes:
     postgres_db:
     pgadmin_data:
     php_var:
+    symfony_vendor:
