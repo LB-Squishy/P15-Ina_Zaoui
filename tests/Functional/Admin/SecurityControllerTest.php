@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SecurityControllerTest extends FunctionalTestCase
 {
+    /////////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE DE CONNEXION-----////////////////////////////////////////////////////////////////////
+
     /**
      * Test de l'affichage de la page de connexion
      */
@@ -17,6 +19,8 @@ class SecurityControllerTest extends FunctionalTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Connexion');
     }
+
+    ////////////////////////////////////////////////////////////////////-----TEST DE CONNEXION AVEC DES IDENTIFIANTS INCORRECTS-----////////////////////////////////////////////////////////////////////
 
     /**
      * Test de la tentative de connexion avec des identifiants incorrects
@@ -45,6 +49,8 @@ class SecurityControllerTest extends FunctionalTestCase
         $this->get('/admin/media');
         $this->assertResponseRedirects('/login');
     }
+
+    ///////////////////////////////////////////////////////////////////-----TEST DE CONNEXION EN TANT QUE SUPER ADMIN, ADMIN ET UTILISATEUR DESACTIVE-----////////////////////////////////////////////////////////////////////
 
     /**
      * Test de la tentative de connexion en tant que super admin

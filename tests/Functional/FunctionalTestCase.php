@@ -64,31 +64,33 @@ abstract class FunctionalTestCase extends WebTestCase
      *
      * @param string $email L'email de l'utilisateur à connecter
      */
-    protected function loginUser(string $email): void
+    protected function loginUser(string $email): User
     {
         $user = $this->service(EntityManagerInterface::class)->getRepository(User::class)->findOneByEmail($email);
         $this->client->loginUser($user);
+
+        return $user;
     }
     /**
      * Connecte un super administrateur pour les tests fonctionnels.
      */
-    protected function loginAsSuperAdmin(): void
+    protected function loginAsSuperAdmin(): User
     {
-        $this->loginUser('ina@zaoui.com');
+        return $this->loginUser('ina@zaoui.com');
     }
     /**
      * Connecte un administrateur pour les tests fonctionnels.
      */
-    protected function loginAsAdmin(): void
+    protected function loginAsAdmin(): User
     {
-        $this->loginUser('invite+2@example.com');
+        return $this->loginUser('invite+2@example.com');
     }
     /**
      * Connecte un utilisateur pour les tests fonctionnels.
      */
-    protected function loginAsUser(): void
+    protected function loginAsUser(): User
     {
-        $this->loginUser('invite+1@example.com');
+        return $this->loginUser('invite+1@example.com');
     }
 
     /**
