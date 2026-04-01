@@ -18,6 +18,11 @@ class AlbumFixtures extends Fixture
 
             $this->addReference(sprintf('album%d', $i), $album);
         }
+        // Création d'un album supplémentaire pour les tests d'album sans médias
+        $album = new Album();
+        $album->setName('Album 6');
+        $manager->persist($album);
+        $this->addReference('album6', $album);
 
         $manager->flush();
     }
