@@ -7,11 +7,11 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class AlbumFixtures extends Fixture implements FixtureGroupInterface
+class AlbumTestFixtures extends Fixture implements FixtureGroupInterface
 {
     public static function getGroups(): array
     {
-        return ['dev'];
+        return ['test'];
     }
 
     public function load(ObjectManager $manager): void
@@ -24,6 +24,11 @@ class AlbumFixtures extends Fixture implements FixtureGroupInterface
 
             $this->addReference(sprintf('album%d', $i), $album);
         }
+        // Création d'un album supplémentaire pour les tests d'album sans médias
+        $album = new Album();
+        $album->setName('Album 6');
+        $manager->persist($album);
+        $this->addReference('album6', $album);
 
         $manager->flush();
     }

@@ -158,6 +158,9 @@ class MediaControllerTest extends FunctionalTestCase
 
     ////////////////////////////////////////////////////////////////////-----TEST DE SUPPRESSION DE MEDIA-----////////////////////////////////////////////////////////////////////
 
+    /**
+     * Test de la suppression d'un média qui n'appartient pas à l'utilisateur connecté par un admin
+     */
     public function testCantDeleteMediaOfOtherIfNotSuperAdmin(): void
     {
         // Connect l'admin de test qui est invite+2@example.com
@@ -168,5 +171,23 @@ class MediaControllerTest extends FunctionalTestCase
 
         // Vérifie que la suppression est interdite et que le code de réponse est 403
         $this->assertResponseStatusCodeSame(403);
+    }
+
+    /**
+     * Test de la suppression d'un média qui n'appartient pas à l'utilisateur connecté par un super admin
+     */
+    public function testCanDeleteMediaAsSuperAdmin(): void
+    {
+        // Connect l'admin de test qui est invite+2@example.com
+        $this->loginAsSuperAdmin();
+
+        //Essai de supprimer le media qui a pour id 295 et qui appartient à invite+5@example.com
+        $this->get('/admin/media/delete/295');
+
+        // Vérifie que la suppression a eu lieu
+        $deletedMedia = $this
+            ->service(MediaRepository::class)
+            ->findOneBy(['id' => 295]);
+        $this->assertNull($deletedMedia, 'Le média n\'a pas été supprimé.');
     }
 }
