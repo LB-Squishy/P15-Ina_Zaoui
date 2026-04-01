@@ -25,7 +25,7 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
         ROLE_ADMIN: ROLE_USER
     access_control:
-        - { path: ^/admin/invite, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin/guest, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin/album, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
 

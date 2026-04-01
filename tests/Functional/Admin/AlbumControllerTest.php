@@ -48,7 +48,7 @@ class AlbumControllerTest extends FunctionalTestCase
     public function testIfAccessDeniedForAdmin(): void
     {
         $this->loginAsAdmin();
-        $this->get('/admin/album/add');
+        $this->get('/admin/album');
         $this->assertResponseStatusCodeSame(403);
     }
 
@@ -58,7 +58,7 @@ class AlbumControllerTest extends FunctionalTestCase
     public function testIfAccessDeniedForUser(): void
     {
         $this->loginAsUser();
-        $this->get('/admin/album/add');
+        $this->get('/admin/album');
         $this->assertResponseStatusCodeSame(403);
     }
 
