@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\GuestType;
 use App\Repository\UserRepository;
+use App\Service\MediaStorage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ final class GuestController extends AbstractController
     public function __construct(
         private UserRepository $userRepository,
         private EntityManagerInterface $entityManager,
+        private MediaStorage $mediaStorage,
     ) {}
 
     #[Route("", name: 'admin_guest_index')]
@@ -77,7 +79,7 @@ final class GuestController extends AbstractController
         $guestsMedias = $guest->getMedias();
 
         foreach ($guestsMedias as $media) {
-            unlink($media->getPath());
+            $this->mediaStorage->delete($media->getPath());
         }
 
         $this->entityManager->remove($guest);

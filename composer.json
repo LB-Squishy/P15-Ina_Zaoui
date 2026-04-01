@@ -74,7 +74,7 @@
         "db:drop": "php bin/console doctrine:database:drop --force --if-exists",
         "db:create": "php bin/console doctrine:database:create",
         "db:migrate": "php bin/console doctrine:migrations:migrate --no-interaction",
-        "db:fixtures": "php bin/console doctrine:fixtures:load --no-interaction",
+        "db:fixtures": "php bin/console doctrine:fixtures:load --group=dev --no-interaction",
         "db:reset": [
             "@db:drop",
             "@db:create",
@@ -84,7 +84,7 @@
         "db:test:drop": "php bin/console doctrine:database:drop --force --if-exists --env=test",
         "db:test:create": "php bin/console doctrine:database:create --env=test",
         "db:test:migrate": "php bin/console doctrine:migrations:migrate --no-interaction --env=test",
-        "db:test:fixtures": "php bin/console doctrine:fixtures:load --no-interaction --env=test",
+        "db:test:fixtures": "php bin/console doctrine:fixtures:load --group=test --no-interaction --env=test",
         "db:test:reset": [
             "@db:test:drop",
             "@db:test:create",
