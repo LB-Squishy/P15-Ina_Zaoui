@@ -132,4 +132,37 @@ class GuestControllerTest extends FunctionalTestCase
             ->findOneBy(['name' => 'Invité 2']);
         $this->assertNull($deletedGuest, 'L\'invité n\'a pas été supprimé.');
     }
+
+    ////////////////////////////////////////////////////////////////////-----TEST D'AJOUT D'UN INVITÉ-----////////////////////////////////////////////////////////////////////
+
+    /**
+     * Test de l'ajout d'un invité par un super admin
+     */
+    public function testAddGuestBySuperAdmin(): void
+    {
+        $this->loginAsSuperAdmin();
+        $this->get('/admin/guest/add');
+        $this->assertResponseIsSuccessful();
+
+        //Soumet le formulaire d'ajout d'invité
+        $this->submitForm('Ajouter', [
+            'guest[name]' => 'Test Invité 9999',
+            'guest[description]' => 'Description du Test Invité 9999',
+            'guest[email]' => 'invite+9999@example.com',
+            'guest[plainPassword]' => 'password',
+            'guest[admin]' => 1,
+        ]);
+        $this->assertResponseRedirects('/admin/guest');
+
+        // Vérifie que l'invité a été ajouté en base de données
+        $expectedGuest = $this
+            ->service(UserRepository::class)
+            ->findOneBy(['name' => 'Test Invité 9999']);
+        $this->assertNotNull($expectedGuest, 'L\'invité n\'a pas été ajouté.');
+
+        // Se connecte en tant que "Test Invité 9999" pour vérifier l'accès à la page /admin/media après la création de l'invité
+        $this->loginUser('invite+9999@example.com');
+        $this->get('/admin/media');
+        $this->assertResponseIsSuccessful();
+    }
 }
