@@ -10,11 +10,19 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class MediaFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+class MediaTestFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
+    private const TEST_IMAGES = [
+        'test-uploads/test-0001.webp',
+        'test-uploads/test-0002.webp',
+        'test-uploads/test-0003.webp',
+        'test-uploads/test-0004.webp',
+        'test-uploads/test-0005.webp',
+    ];
+
     public static function getGroups(): array
     {
-        return ['dev'];
+        return ['test'];
     }
 
     public function load(ObjectManager $manager): void
@@ -29,7 +37,7 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface, Fixtur
                 $media = new Media();
                 $media->setUser($this->getReference('user_ina', User::class));
                 $media->setAlbum($album);
-                $media->setPath(sprintf('uploads/%04d.webp', $fileIndex));
+                $media->setPath(self::TEST_IMAGES[$fileIndex % 5]);
                 $media->setTitle(sprintf('Titre %d', $fileIndex));
                 $manager->persist($media);
 
@@ -44,7 +52,7 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface, Fixtur
                 $media = new Media();
                 $media->setUser($guest);
                 $media->setAlbum(null);
-                $media->setPath(sprintf('uploads/%04d.webp', $fileIndex));
+                $media->setPath(self::TEST_IMAGES[$fileIndex % 5]);
                 $media->setTitle(sprintf('Titre %d', $titleIndex));
                 $manager->persist($media);
 
@@ -59,7 +67,7 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface, Fixtur
     {
         return [
             UserFixtures::class,
-            AlbumFixtures::class,
+            AlbumTestFixtures::class,
         ];
     }
 }

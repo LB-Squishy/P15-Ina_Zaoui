@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Media;
 use App\Form\MediaType;
 use App\Repository\MediaRepository;
+use App\Service\MediaStorage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ class MediaController extends AbstractController
     public function __construct(
         private MediaRepository $mediaRepository,
         private EntityManagerInterface $entityManager,
+        private MediaStorage $mediaStorage,
     ) {}
 
     #[Route("", name: "admin_media_index")]
@@ -75,7 +77,7 @@ class MediaController extends AbstractController
         }
         $this->entityManager->remove($media);
         $this->entityManager->flush();
-        unlink($media->getPath());
+        $this->mediaStorage->delete($media->getPath());
 
         return $this->redirectToRoute('admin_media_index');
     }
