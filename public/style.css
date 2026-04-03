@@ -2,8 +2,9 @@
     font-family: "DM Mono", monospace;
 }
 
-html, body {
-    background: #DFECF0;
+html,
+body {
+    background: #dfecf0;
 }
 
 header nav .nav-link {
@@ -24,7 +25,8 @@ h2 {
     margin: 0;
 }
 
-.home-title, h3 {
+.home-title,
+h3 {
     font-size: 24px;
     font-weight: 400;
     line-height: 31.25px;
@@ -46,7 +48,8 @@ p {
     font-family: "DM Sans", sans-serif;
 }
 
-.btn:hover, .btn.active {
+.btn:hover,
+.btn.active {
     color: white;
     background: #333;
 }
@@ -94,6 +97,38 @@ a {
 .media-title {
     font-size: 14px;
     font-family: "DM Sans", sans-serif;
+}
+
+.pagination .page-link {
+    color: #333;
+    border-radius: 0;
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.pagination .page-link:hover {
+    background-color: #333;
+    color: white;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #333;
+    color: white;
+    border-radius: 0;
+    border-color: #333;
+}
+
+.page-item:first-child .page-link {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.page-item:last-child .page-link {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 footer {
