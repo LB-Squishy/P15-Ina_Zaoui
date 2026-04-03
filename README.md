@@ -1,4 +1,4 @@
-<img src="public/images/name.png" alt="InaZaoui" width="300" />
+<img src="public/images/name.webp" alt="InaZaoui" width="300" />
 
 # Ina Zaoui : Refactorisez le code d'un site pour l'optimiser
 
@@ -16,25 +16,31 @@ Il vous est demandé de mettre à jour et corriger son site. Vous remplacez la p
 - la rédaction de la documentation
 - la mise en place d'une pipeline d'intégration continue
 
-## ✅ Prérequis:
+### Prérequis:
 
 - Docker Desktop installé et lancé
 - Git
 - VS Code + extension Docker
 
-## ✅ SetUp Docker:
+### SetUp Docker:
 
-- Symfony 7.4
-- PHP 8.3
+- Symfony 7.4 LTS [Lien](https://symfony.com/releases)
+- PHP 8.3 [Lien](https://www.php.net/supported-versions.php)
+- PHPUnit 12.5 [Lien](https://phpunit.de/supported-versions.html)
 - Composer
 - Nginx
 - PostgresSQL
 - pgAdmin
 
-## ✅ Accès:
+### Accès:
 
 - Site : http://localhost:8081
 - pgAdmin : http://localhost:8080/
+
+### Liens Utiles:
+
+Veuillez suivre le lien suivant afin de prendre connaissance des directives liées aux contributions: [Lien](https://github.com/LB-Squishy/P15-Ina_Zaoui/blob/main/CONTRIBUTING.md).
+Pour consulter le Rapport de taux de couverture des tests une fois le code arrivé en pre-production suivre ce lien: [Lien](https://lb-squishy.github.io/P15-Ina_Zaoui/).
 
 ## ✅ Installation
 
@@ -70,6 +76,10 @@ DATABASE_URL="postgresql://postgres:postgres@postgres:5432/ina_zaoui?serverVersi
 ```
 
 ### 5. Construire les images Docker:
+
+- Téléchargez Docker Desktop puis lancez le.
+
+- Ensuite construisez les images avec la commande suivante:
 
 ```bash
 docker compose up -d --build
