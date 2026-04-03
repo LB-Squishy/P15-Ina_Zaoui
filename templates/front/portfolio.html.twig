@@ -30,5 +30,34 @@
             </div>
         </div>
     </div>
+    {% set totalPages = (total / 6)|round(0, 'ceil') %}
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('portfolio', {id: album ? album.id : null, page: 1}) }}">&laquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('portfolio', {id: album ? album.id : null, page: page - 1}) }}">Précédent</a>
+                </li>
+            {% endif %}
+
+            {% for i in range(max(1, page - 2), min(totalPages, page + 2)) %}
+                <li class="page-item {% if i == page %}active{% endif %}">
+                    <a class="page-link" href="{{ path('portfolio', {id: album ? album.id : null, page: i}) }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {% if page < totalPages %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('portfolio', {id: album ? album.id : null, page: page + 1}) }}">Suivant</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('portfolio', {id: album ? album.id : null, page: totalPages}) }}">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 {% endblock %}
 

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional\Front;
 
+use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use App\Tests\Functional\FunctionalTestCase;
 
@@ -86,7 +87,7 @@ class GuestControllerTest extends FunctionalTestCase
         // Récupère le nom des invités et le nombre de medias attendus par invités depuis la BDD
         $expectedGuests = $this
             ->service(UserRepository::class)
-            ->findBy(['super_admin' => false, 'admin' => true]);
+            ->findBy(['super_admin' => false, 'admin' => true], ['id' => 'ASC'], 5, 0);
 
         $expectedGuestsNames = [];
         $expectedGuestsMediasCount = [];
@@ -147,7 +148,9 @@ class GuestControllerTest extends FunctionalTestCase
                 /** @var \DOMElement $media */
                 $guestMediasPaths[] = ltrim($media->getAttribute('src'), '/');
             }
-            $expectedGuestMediasItems = $expectedGuest->getMedias();
+            $expectedGuestMediasItems = $this
+                ->service(MediaRepository::class)
+                ->findBy(['user' => $expectedGuest], ['id' => 'ASC'], 9, 0);
             $expectedGuestMediasPaths = [];
             foreach ($expectedGuestMediasItems as $expectedGuestMediasItem) {
                 $expectedGuestMediasPaths[] = $expectedGuestMediasItem->getPath();

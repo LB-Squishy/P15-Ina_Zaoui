@@ -58,7 +58,7 @@ class PortfolioControllerTest extends FunctionalTestCase
             ->findOneBy(['super_admin' => true]);
         $expectedMedias = $this
             ->service(MediaRepository::class)
-            ->findBy(['user' => $ina]);
+            ->findBy(['user' => $ina], ['id' => 'ASC'], 6, 0);
 
         $this->assertSame(count($expectedMedias), $medias->count(), 'Le nombre d\'images affichées dans le portfolio ne correspond pas au nombre attendu.');
     }
@@ -68,10 +68,11 @@ class PortfolioControllerTest extends FunctionalTestCase
      */
     public function testBackToAllMediasIfBadAlbumId(): void
     {
-        $crawler = $this->get('/portfolio/9999999');
-        $this->assertResponseIsSuccessful();
+        $this->get('/portfolio/9999999');
+        $this->assertResponseRedirects('/portfolio');
 
         // Récupère les medias affichés
+        $crawler = $this->client->followRedirect();
         $medias = $crawler->filter('.media img');
         $this->assertGreaterThan(0, $medias->count(), 'Aucun media trouvé dans la page portfolio');
 
@@ -81,7 +82,7 @@ class PortfolioControllerTest extends FunctionalTestCase
             ->findOneBy(['super_admin' => true]);
         $expectedMedias = $this
             ->service(MediaRepository::class)
-            ->findBy(['user' => $ina]);
+            ->findBy(['user' => $ina], ['id' => 'ASC'], 6, 0);
 
         $this->assertSame(count($expectedMedias), $medias->count(), 'Le nombre d\'images affichées dans le portfolio ne correspond pas au nombre attendu.');
     }
@@ -115,7 +116,7 @@ class PortfolioControllerTest extends FunctionalTestCase
             // Récupère les médias attendus et affichés pour l'album
             $expectedMedias = $this
                 ->service(MediaRepository::class)
-                ->findBy(['album' => $album]);
+                ->findBy(['album' => $album], ['id' => 'ASC'], 6, 0);
             $medias = $albumCrawler
                 ->filter('.media img');
 
