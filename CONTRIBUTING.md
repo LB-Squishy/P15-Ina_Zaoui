@@ -24,7 +24,7 @@ Cordialement
 
 ## ✅ Sécurité
 
-### Mots de passes:
+### 1. Mots de passes:
 
 Afin d'éviter toute fuite de mot de passe ou identifiant liés au projet, veuillez utiliser un gestionnaire de mot de passe avec profil de participant.
 Aucun mot de passe ou identifiant ne doit se situer sur un post it positionné sur votre bureau.
@@ -34,7 +34,7 @@ A la première mise en place du projet:
 - Renouvelez l'intégralité des mots de passes et mot de passe de test
 - Enregistrez les dans le gestionnaire et retirez les anciens du projet
 
-### .ENV et variables d'environnement:
+### 2. .ENV et variables d'environnement:
 
 Veuillez systématiquement créé des fichiers d'environnement local:
 .env.local / .env.test.local
@@ -44,7 +44,7 @@ De même, les .local ne doivent en aucun cas être commités sur le dépôt.
 
 Afin de retrouver les valeurs de ceux ci plus facilement et de facilité le travail à plusieurs veuillez également intégrer le contenu des fichiers .env dans le gestionnaire de mot de passe
 
-### Politique de mise à niveau:
+### 3. Politique de mise à niveau:
 
 Veuillez vous montrer attentif vis à vis des montée de version afin de ne pas avoir à accuser une trop grosse montée de version d'un coup.
 A chaque évolution, pensez à réactualiser le [README.md](https://github.com/LB-Squishy/P15-Ina_Zaoui/blob/main/README.md)
@@ -53,7 +53,7 @@ _Important: Pensez également à actualiser les versions en CI et les images Doc
 
 ## ✅ Workflow Github
 
-### Dévelopement d'une nouvelle fonctionnalité
+### 1. Dévelopement d'une nouvelle fonctionnalité
 
 #### Nouvelle branche
 
@@ -98,7 +98,7 @@ Seul le ou la chef(fe) de projet sera habilité à merge les nouvelles features.
 - Réitérez la pull request puis merge vers la main depuis la preprod
 - Vérifier le bon fonctionnement du site
 
-### Tests automatisés et pipeline d'intégration
+### 2. Tests automatisés et pipeline d'intégration
 
 #### Tests Unitaire et Fonctionnels
 
@@ -122,13 +122,13 @@ Cf. section : Scripts Utiles (Composer)
 
 ## ✅ Bonnes pratiques
 
-### README & CONTRIBUTING
+### 1. README & CONTRIBUTING
 
 N'hésitez pas à enrichir ces deux sections et à contrôler périodiquement leur bonne adéquation avec le projet et son évolution.
 Veuillez respecter la hiérarchisation des titres afin de s'y repérer facilement (pensez à ajouter systématiquement l'icône ✅ afin de faire ressortir les titres de niveau 2 et d'en faciliter la lecture).
 Le/la chef(fe) de projet reste seule habilité à valider toute modifications de ces deux fichiers.
 
-### Testing
+### 2. Testing
 
 A chaque nouvelle feature veuillez à créer les tests fonctionnels et unitaires nécessaire.
 Prenez systématiquement le temps d'essayer de projeter le parcours de votre utilissateur et de vos données cela accroitra la pertinance de vos tests.
@@ -143,7 +143,7 @@ docker compose exec php php bin/console make:test
 - Concernant les tests fonctionnels, une série de helpers sont disponibles dans le fichiers FunctionalTestCase qui extends deja WebTestCase
 - Veuillez remplacer "extends WebTestCase" par "extends FunctionalTestCase" pour pouvoir les utiliser
 
-### Commentaires
+### 3. Commentaires
 
 Prenez le temps de toujours commenter votre code. Afin d'en faciliter la lecture à l'avenir, il est attendu :
 
@@ -152,9 +152,9 @@ Prenez le temps de toujours commenter votre code. Afin d'en faciliter la lecture
 
 Un code bien commenté est un code facilitant l'intégration de toute nouvelle personne à votre projet, ceci vous facilitera également alégrement la tâche lors d'une intervention sur un code que vous avez écris il y 3 mois.
 
-## ✅ Recommandations de Développement
+## ✅ Suggestions de Développement
 
-### Modèle de donnée
+### 1. Modèle de donnée
 
 Actuellement les Utilisateurs et leurs contenu sont supprimés d'un tenant tel que demandé.
 Cependant je préconise la mise en place d'une suppression en 2 temps:
@@ -167,21 +167,21 @@ De même cela permet de bien dissocier la suppression des images en BDD et la su
 
 Si ceci est mis en place par la suite, bien réfléchir à la durée de conservation.
 
-### Activation/Désactivation d'accès
+### 2. Activation/Désactivation d'accès
 
 Actuellemnt l'activation/Désactivation d'un utilisateur lui retire son accès admin ainsi que l'affichage de ses médias sur le site.
 Il est préférable de manière générale de séparer ces deux éléments en créant deux rôles distinct et la possibilité de désactiver l'un sans l'autre.
 
-### Mot de Passe oublié
+### 3. Mot de Passe oublié
 
 Il est noté l'absence de possibilité pour un utilisateur de pouvoir modifier son mot de passe sans passer par l'administrateur. Afin de faciliter le flux quotidien, je recommande le développement de cette feature.
 
-### Favicon & Metadata
+### 4. Favicon & Metadata
 
 Le favicon étant absent j'ai repris le logo, cependant il est préferable de prendre le temps de le penser afin de le remplacer.
 De même prenez le temps de préparer des meta pertinantes sur chaques pages afin de bien veillez au bon référencement du site.
 
-### Images
+### 5. Images
 
 Les images ont été reformatées au format .webp
 Privilégiez ce format pour le web. Etant sur un site de photographe je n'ai pas changé les images des portfolios afin de pouvoir les voir en entier.
