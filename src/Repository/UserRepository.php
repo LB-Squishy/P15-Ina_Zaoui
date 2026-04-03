@@ -40,26 +40,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * Récupère les invités (admin = true, super_admin = false) avec le nombre de médias associés à chacun
-     * @return array Retourne un tableau d'invités composé d'id, nom et nombre de médias
-     */
-    public function findAdminGuestsWithMediaCount(): array
-    {
-        return $this->createQueryBuilder('u')
-            ->select('u.id AS id', 'u.name AS name', 'COUNT(m.id) AS mediasCount')
-            ->leftJoin('u.medias', 'm')
-            ->andWhere('u.super_admin = :superAdmin')
-            ->andWhere('u.admin = :admin')
-            ->setParameter('superAdmin', false)
-            ->setParameter('admin', true)
-            ->groupBy('u.id')
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */

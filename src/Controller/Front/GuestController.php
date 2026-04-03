@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 class GuestController extends AbstractController
@@ -13,12 +14,24 @@ class GuestController extends AbstractController
     ) {}
 
     #[Route("/guests", name: "guests")]
-    public function guests()
+    public function guests(Request $request)
     {
-        $guests = $this->userRepository->findAdminGuestsWithMediaCount();
-        // dd($guests);
+        $page = $request->query->getInt('page', 1);
+
+        $criteria = ['super_admin' => false, 'admin' => true];
+
+        $guests = $this->userRepository->findBy(
+            $criteria,
+            ['id' => 'ASC'],
+            5,
+            5 * ($page - 1)
+        );
+        $total = $this->userRepository->count($criteria);
+
         return $this->render('front/guests.html.twig', [
-            'guests' => $guests
+            'guests' => $guests,
+            'total' => $total,
+            'page' => $page
         ]);
     }
 
