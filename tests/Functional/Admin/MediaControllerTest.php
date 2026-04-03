@@ -118,6 +118,10 @@ class MediaControllerTest extends FunctionalTestCase
         $media = null;
         $imagePath = null;
 
+        // Founir le chemin absolu du dossier uploads pour pouvoir nettoyer les fichiers après le test
+        $projectDirectory = $this->client->getContainer()->getParameter('kernel.project_dir');
+        $uploadsDirectory = $projectDirectory . '/public/';
+
         try {
             // Fournir le chemin de l'image de test
             $imagePath = __DIR__ . '/../../Images/image-test-ok.webp';
@@ -147,11 +151,13 @@ class MediaControllerTest extends FunctionalTestCase
             if ($user->isSuperAdmin()) {
                 $this->assertSame(1, $media->getAlbum()->getId(), 'Le média ajouté n\'est pas associé au bon album.');
             }
-            $this->assertFileExists($media->getPath(), 'Le fichier du média ajouté n\'a pas été trouvé dans le dossier uploads.');
+            $this->assertFileExists($uploadsDirectory . $media->getPath(), 'Le fichier du média ajouté n\'a pas été trouvé dans le dossier uploads.');
         } finally {
             // Nettoyer le dossier uploads après le test
-            if ($media && file_exists($media->getPath())) {
-                unlink($media->getPath());
+            if ($media) {
+                if (file_exists($uploadsDirectory . $media->getPath())) {
+                    unlink($uploadsDirectory . $media->getPath());
+                }
             }
         }
     }
