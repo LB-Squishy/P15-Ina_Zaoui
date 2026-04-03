@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Entity;
 
+use App\Entity\Media;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
@@ -29,6 +30,20 @@ class UserTest extends TestCase
         $user->setDescription('testdescription');
 
         $this->assertSame('testdescription', $user->getDescription(), 'La description ne correspond pas à la valeur attendue');
+    }
+
+    public function testMedia(): void
+    {
+        $media = new Media();
+        $media->setTitle('testmedia');
+
+        $collection = new \Doctrine\Common\Collections\ArrayCollection();
+        $collection->add($media);
+
+        $user = new User();
+        $user->setMedias($collection);
+
+        $this->assertSame('testmedia', $user->getMedias()->first()->getTitle(), 'Le titre du media ne correspond pas à la valeur attendue');
     }
 
     public function testMedias(): void
