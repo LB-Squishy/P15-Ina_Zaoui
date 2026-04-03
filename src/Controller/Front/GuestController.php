@@ -15,7 +15,8 @@ class GuestController extends AbstractController
     #[Route("/guests", name: "guests")]
     public function guests()
     {
-        $guests = $this->userRepository->findBy(['super_admin' => false, 'admin' => true]);
+        $guests = $this->userRepository->findAdminGuestsWithMediaCount();
+        // dd($guests);
         return $this->render('front/guests.html.twig', [
             'guests' => $guests
         ]);
