@@ -86,7 +86,7 @@ class GuestControllerTest extends FunctionalTestCase
         // Récupère le nom des invités et le nombre de medias attendus par invités depuis la BDD
         $expectedGuests = $this
             ->service(UserRepository::class)
-            ->findBy(['super_admin' => false, 'admin' => true]);
+            ->findBy(['super_admin' => false, 'admin' => true], ['id' => 'ASC'], 5, 0);
 
         $expectedGuestsNames = [];
         $expectedGuestsMediasCount = [];
