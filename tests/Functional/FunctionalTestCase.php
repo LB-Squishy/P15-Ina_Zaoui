@@ -51,8 +51,8 @@ abstract class FunctionalTestCase extends WebTestCase
     /**
      * Effectue une requête GET vers l'URI spécifiée avec les paramètres optionnels.
      *
-     * @param string $uri        L'URI de la requête
-     * @param array  $parameters Les paramètres de la requête
+     * @param string               $uri        L'URI de la requête
+     * @param array<string, mixed> $parameters Les paramètres de la requête
      *
      * @return Crawler Le crawler résultant de la requête
      */
@@ -101,9 +101,9 @@ abstract class FunctionalTestCase extends WebTestCase
     /**
      * Soumet un formulaire en utilisant le texte du bouton et les données du formulaire.
      *
-     * @param string $buttonText Le texte du bouton de soumission du formulaire
-     * @param array  $formData   Les données à soumettre dans le formulaire
-     * @param string $methode    La méthode HTTP à utiliser pour la soumission (par défaut 'POST')
+     * @param string               $buttonText Le texte du bouton de soumission du formulaire
+     * @param array<string, mixed> $formData   Les données à soumettre dans le formulaire
+     * @param string               $methode    La méthode HTTP à utiliser pour la soumission (par défaut 'POST')
      *
      * @return Crawler Le crawler résultant de la soumission du formulaire
      */

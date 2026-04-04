@@ -97,6 +97,17 @@
         "test:phpstan": "vendor/bin/phpstan analyse --memory-limit=1G",
         "test:phpstan:ci": "vendor/bin/phpstan analyse --memory-limit=1G --no-progress --error-format=github",
         "test:phpunit": "phpunit --testdox --colors=always",
+        "test:quick": [
+            "@test:cs:check",
+            "@test:phpstan",
+            "@test:phpunit"
+        ],
+        "test:hard": [
+            "@test:cs:check",
+            "@test:phpstan",
+            "@db:test:reset",
+            "@test:phpunit"
+        ],
         "test:phpunit:ci": [
             "@db:test:reset",
             "@test:phpunit"

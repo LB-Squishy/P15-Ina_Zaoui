@@ -9,6 +9,7 @@ use App\Service\MediaStorage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route("/admin/guest")]
@@ -21,7 +22,7 @@ final class GuestController extends AbstractController
     ) {}
 
     #[Route("", name: 'admin_guest_index')]
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
 
@@ -43,7 +44,7 @@ final class GuestController extends AbstractController
     }
 
     #[Route("/add", name: "admin_guest_add")]
-    public function add(Request $request)
+    public function add(Request $request): Response
     {
         $guest = new User();
         $form = $this->createForm(GuestType::class, $guest);
@@ -62,7 +63,7 @@ final class GuestController extends AbstractController
     }
 
     #[Route("/update/{id}", name: "admin_guest_update")]
-    public function update(int $id)
+    public function update(int $id): Response
     {
         $guest = $this->userRepository->find($id);
         $guest->setAdmin(!$guest->isAdmin());
@@ -73,7 +74,7 @@ final class GuestController extends AbstractController
     }
 
     #[Route("/delete/{id}", name: "admin_guest_delete")]
-    public function delete(int $id)
+    public function delete(int $id): Response
     {
         $guest = $this->userRepository->find($id);
         $guestsMedias = $guest->getMedias();

@@ -6,6 +6,7 @@ use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class GuestController extends AbstractController
@@ -16,7 +17,7 @@ class GuestController extends AbstractController
     ) {}
 
     #[Route("/guests", name: "guests")]
-    public function guests(Request $request)
+    public function guests(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
 
@@ -38,7 +39,7 @@ class GuestController extends AbstractController
     }
 
     #[Route("/guest/{id}", name: "guest")]
-    public function guest(int $id, Request $request)
+    public function guest(int $id, Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
 

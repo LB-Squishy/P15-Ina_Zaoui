@@ -2,8 +2,10 @@
 
 namespace App\Tests\Functional\Admin;
 
+use App\Entity\User;
 use App\Repository\MediaRepository;
 use App\Tests\Functional\FunctionalTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 
 class MediaControllerTest extends FunctionalTestCase
 {
@@ -36,11 +38,8 @@ class MediaControllerTest extends FunctionalTestCase
 
     /**
      * Vérifie que le nombre de pages de médias affichées correspond au nombre attendu en fonction du rôle de l'utilisateur.
-     *
-     * @param $user    l'utilisateur connecté
-     * @param $crawler le crawler de la page /admin/media
      */
-    public function checkMediaPageCount($user, $crawler): void
+    private function checkMediaPageCount(User $user, Crawler $crawler): void
     {
         // Prépare les critères de recherche en fonction du rôle de l'utilisateur
         $criteria = [];
@@ -143,10 +142,8 @@ class MediaControllerTest extends FunctionalTestCase
 
     /**
      * Ajout d'un média en fonction du rôle de l'utilisateur connecté.
-     *
-     * @param $user l'utilisateur connecté
      */
-    public function addMediaByUserTest($user): void
+    private function addMediaByUserTest(User $user): void
     {
         $media = null;
         $imagePath = null;

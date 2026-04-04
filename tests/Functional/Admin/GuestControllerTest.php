@@ -89,7 +89,7 @@ class GuestControllerTest extends FunctionalTestCase
 
         // Récupère le lien de révocation du deuxième invité de la liste
         $guestLink = $crawler->filter('table tbody tr td:nth-child(3) a')->eq(1);
-        $this->assertNotNull($guestLink, 'Le lien de révocation du deuxième invité n\'a pas été trouvé.');
+        $this->assertGreaterThan(0, $guestLink->count(), 'Le lien de révocation du deuxième invité n\'a pas été trouvé.');
 
         // Révoque les droits d'accès du deuxième invité de la liste
         $this->client->click($guestLink->link());
@@ -120,7 +120,7 @@ class GuestControllerTest extends FunctionalTestCase
 
         // Récupère le lien de suppression du deuxième invité de la liste
         $guestLink = $crawler->filter('table tbody tr td:nth-child(4) a')->eq(1);
-        $this->assertNotNull($guestLink, 'Le lien de suppression du deuxième invité n\'a pas été trouvé.');
+        $this->assertGreaterThan(0, $guestLink->count(), 'Le lien de suppression du deuxième invité n\'a pas été trouvé.');
 
         // Supprime le deuxième invité de la liste
         $this->client->click($guestLink->link());

@@ -259,3 +259,25 @@ docker compose exec php composer test:cs:check
 ```bash
 docker compose exec php composer test:cs:fix
 ```
+
+### 3. Utilisation de PHP Stan
+
+**Lancer les tests**:
+
+```bash
+docker compose exec php composer test:phpstan
+```
+
+### 4. Réaliser l'intégralité des tests d'un tenant
+
+**Pour un test global rapide:**
+
+```bash
+docker compose exec php composer test:quick
+```
+
+**Pour un test global complet (avec reset de la db de test):**
+
+```bash
+docker compose exec php composer test:hard
+```

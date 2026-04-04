@@ -8,6 +8,7 @@ use App\Repository\AlbumRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route("/admin/album")]
@@ -19,7 +20,7 @@ class AlbumController extends AbstractController
     ) {}
 
     #[Route("", name: "admin_album_index")]
-    public function index()
+    public function index(): Response
     {
         $albums = $this->albumRepository->findAll();
 
@@ -27,7 +28,7 @@ class AlbumController extends AbstractController
     }
 
     #[Route("/add", name: "admin_album_add")]
-    public function add(Request $request)
+    public function add(Request $request): Response
     {
         $album = new Album();
         $form = $this->createForm(AlbumType::class, $album);
@@ -44,7 +45,7 @@ class AlbumController extends AbstractController
     }
 
     #[Route("/update/{id}", name: "admin_album_update")]
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): Response
     {
         $album = $this->albumRepository->find($id);
         $form = $this->createForm(AlbumType::class, $album);
@@ -60,7 +61,7 @@ class AlbumController extends AbstractController
     }
 
     #[Route("/delete/{id}", name: "admin_album_delete")]
-    public function delete(int $id)
+    public function delete(int $id): Response
     {
         $album = $this->albumRepository->find($id);
         $this->entityManager->remove($album);
