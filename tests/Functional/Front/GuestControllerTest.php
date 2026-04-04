@@ -145,7 +145,7 @@ class GuestControllerTest extends FunctionalTestCase
             // Vérifie que les chemins des médias de l'invité affichés correspondent aux chemins des médias de l'invité attendu
             $guestMediasPaths = [];
             foreach ($guestCrawler->filter('.media img') as $media) {
-                /* @var \DOMElement $media */
+                /** @var \DOMElement $media */
                 $guestMediasPaths[] = ltrim($media->getAttribute('src'), '/');
             }
             $expectedGuestMediasItems = $this

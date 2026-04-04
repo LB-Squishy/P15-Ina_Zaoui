@@ -14,6 +14,7 @@ return (new PhpCsFixer\Config())
         'single_quote' => false,
         'concat_space' => ['spacing' => 'one'],
         'single_line_empty_body' => true,
+        'phpdoc_to_comment' => false,
     ])
     ->setFinder($finder)
 ;
