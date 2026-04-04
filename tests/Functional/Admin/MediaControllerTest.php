@@ -7,9 +7,9 @@ use App\Tests\Functional\FunctionalTestCase;
 
 class MediaControllerTest extends FunctionalTestCase
 {
-    ////////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE /ADMIN/MEDIA-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE /ADMIN/MEDIA-----////////////////////////////////////////////////////////////////////
     /**
-     * Test de l'affichage de la page /admin/media pour un super admin
+     * Test de l'affichage de la page /admin/media pour un super admin.
      */
     public function testShowAdminMediaPageForSuperAdmin(): void
     {
@@ -21,8 +21,8 @@ class MediaControllerTest extends FunctionalTestCase
         $this->checkMediaPageCount($user, $crawler);
     }
 
-    /** 
-     * Test de l'affichage de la page /admin/media pour un admin
+    /**
+     * Test de l'affichage de la page /admin/media pour un admin.
      */
     public function testShowAdminMediaPageForAdmin(): void
     {
@@ -35,10 +35,10 @@ class MediaControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Vérifie que le nombre de pages de médias affichées correspond au nombre attendu en fonction du rôle de l'utilisateur
-     * @param $user l'utilisateur connecté
+     * Vérifie que le nombre de pages de médias affichées correspond au nombre attendu en fonction du rôle de l'utilisateur.
+     *
+     * @param $user    l'utilisateur connecté
      * @param $crawler le crawler de la page /admin/media
-     * @return void
      */
     public function checkMediaPageCount($user, $crawler): void
     {
@@ -48,7 +48,7 @@ class MediaControllerTest extends FunctionalTestCase
             $criteria['user'] = $user;
         }
 
-        //Vérifie la quantité de pages attendue en BDD
+        // Vérifie la quantité de pages attendue en BDD
         $expectedTotalMedias = $this
             ->service(MediaRepository::class)
             ->findBy($criteria);
@@ -61,7 +61,7 @@ class MediaControllerTest extends FunctionalTestCase
         $lastPageLink = $crawler
             ->filter('ul.pagination a.page-link')
             ->last();
-        if ($lastPageLink->text() !== "Dernière page") {
+        if ("Dernière page" !== $lastPageLink->text()) {
             $mediaPageCount = 1;
         } else {
             $mediaPageCount = (int) str_replace('/admin/media?page=', '', $lastPageLink->attr('href'));
@@ -70,9 +70,9 @@ class MediaControllerTest extends FunctionalTestCase
         $this->assertSame($expectedMediaPageCount, $mediaPageCount, 'Le nombre de pages de médias affichées ne correspond pas au nombre attendu.');
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE /ADMIN/MEDIA/ADD-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE /ADMIN/MEDIA/ADD-----////////////////////////////////////////////////////////////////////
     /**
-     * Test de l'affichage de la page /admin/media/add pour un super admin
+     * Test de l'affichage de la page /admin/media/add pour un super admin.
      */
     public function testShowGoodAdminMediaAddPageForSuperAdmin(): void
     {
@@ -87,8 +87,8 @@ class MediaControllerTest extends FunctionalTestCase
         $this->assertSelectorExists('input[name="media[file]"]', 'Le champ "file" devrait être visible pour les super admin');
     }
 
-    /** 
-     * Test de l'affichage de la page /admin/media/add pour un admin
+    /**
+     * Test de l'affichage de la page /admin/media/add pour un admin.
      */
     public function testShowGoodAdminMediaAddPageForAdmin(): void
     {
@@ -103,10 +103,10 @@ class MediaControllerTest extends FunctionalTestCase
         $this->assertSelectorExists('input[name="media[file]"]', 'Le champ "file" devrait être visible pour les admin');
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST D'AJOUT DE MEDIA-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST D'AJOUT DE MEDIA-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test d'ajout de media par un super admin
+     * Test d'ajout de media par un super admin.
      */
     public function testAddMediaAsSuperAdmin(): void
     {
@@ -123,8 +123,8 @@ class MediaControllerTest extends FunctionalTestCase
         $this->addMediaByUserTest($user);
     }
 
-    /** 
-     * Test d'ajout de media par un admin
+    /**
+     * Test d'ajout de media par un admin.
      */
     public function testAddMediaAsAdmin(): void
     {
@@ -142,9 +142,9 @@ class MediaControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Ajout d'un média en fonction du rôle de l'utilisateur connecté
+     * Ajout d'un média en fonction du rôle de l'utilisateur connecté.
+     *
      * @param $user l'utilisateur connecté
-     * @return void
      */
     public function addMediaByUserTest($user): void
     {
@@ -195,10 +195,10 @@ class MediaControllerTest extends FunctionalTestCase
         }
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST D'AJOUT DE MEDIA-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST D'AJOUT DE MEDIA-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test d'ajout de media dépassant les 2 Mo
+     * Test d'ajout de media dépassant les 2 Mo.
      */
     public function testCantAddMediaMoreThan2Mo(): void
     {
@@ -233,7 +233,7 @@ class MediaControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test d'ajout de media qui n'est pas une image
+     * Test d'ajout de media qui n'est pas une image.
      */
     public function testCantAddMediaThatIsNotAnImage(): void
     {
@@ -267,17 +267,17 @@ class MediaControllerTest extends FunctionalTestCase
         $this->assertNull($media, 'Le média a été trouvé en BDD alors qu\'il ne devrait pas l\'être.');
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST DE SUPPRESSION DE MEDIA-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST DE SUPPRESSION DE MEDIA-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de la suppression d'un média qui n'appartient pas à l'utilisateur connecté par un admin
+     * Test de la suppression d'un média qui n'appartient pas à l'utilisateur connecté par un admin.
      */
     public function testCantDeleteMediaOfOtherIfNotSuperAdmin(): void
     {
         // Connect l'admin de test qui est invite+2@example.com
         $this->loginAsAdmin();
 
-        //Essai de supprimer le media qui a pour id 295 et qui appartient à invite+5@example.com
+        // Essai de supprimer le media qui a pour id 295 et qui appartient à invite+5@example.com
         $this->get('/admin/media/delete/295');
 
         // Vérifie que la suppression est interdite et que le code de réponse est 403
@@ -285,14 +285,14 @@ class MediaControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de la suppression d'un média qui n'appartient pas à l'utilisateur connecté par un super admin
+     * Test de la suppression d'un média qui n'appartient pas à l'utilisateur connecté par un super admin.
      */
     public function testCanDeleteMediaAsSuperAdmin(): void
     {
         // Connect l'admin de test qui est invite+2@example.com
         $this->loginAsSuperAdmin();
 
-        //Essai de supprimer le media qui a pour id 295 et qui appartient à invite+5@example.com
+        // Essai de supprimer le media qui a pour id 295 et qui appartient à invite+5@example.com
         $this->get('/admin/media/delete/295');
 
         // Vérifie que la suppression a eu lieu

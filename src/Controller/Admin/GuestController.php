@@ -38,7 +38,7 @@ final class GuestController extends AbstractController
         return $this->render('admin/guest/index.html.twig', [
             'guests' => $guests,
             'total' => $total,
-            'page' => $page
+            'page' => $page,
         ]);
     }
 

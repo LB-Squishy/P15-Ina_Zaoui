@@ -78,6 +78,12 @@ Veillez toujours à effectuez votre commit dans votre branche de travail en la n
 - feat(enUnMotDomaineDintervention): Description de votre intervention
 - ...
 
+**Appliquez cs-fixer**
+
+```bash
+docker compose exec php composer test:cs:fix
+```
+
 Une fois le commit effectuez, vérifiez toujours la validation des tests lancés sur la branche qui vient d'être push sur github.
 _Chaque echec au test doit être examiné manuellement afin d'en déterminer la cause_
 

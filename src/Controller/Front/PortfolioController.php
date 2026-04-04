@@ -46,7 +46,7 @@ class PortfolioController extends AbstractController
             'album' => $album,
             'medias' => $medias,
             'total' => $total,
-            'page' => $page
+            'page' => $page,
         ]);
     }
 }

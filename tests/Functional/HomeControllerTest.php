@@ -2,14 +2,12 @@
 
 namespace App\Tests\Functional;
 
-use App\Tests\Functional\FunctionalTestCase;
-
 class HomeControllerTest extends FunctionalTestCase
 {
     /**
      * Test de l'affichage de la page d'accueil
      * - en tant qu'utilisateur non connecté
-     * - et de l'abscence des liens "Admin" et "Déconnexion"
+     * - et de l'abscence des liens "Admin" et "Déconnexion".
      */
     public function testShowHomeAsDisconnectedUser(): void
     {
@@ -22,7 +20,7 @@ class HomeControllerTest extends FunctionalTestCase
     /**
      * Test de l'affichage de la page d'accueil
      * - en tant que simple utilisateur connecté
-     * - et de l'absence des liens "Admin" et "Déconnexion"
+     * - et de l'absence des liens "Admin" et "Déconnexion".
      */
     public function testShowHomeAsUser(): void
     {
@@ -36,7 +34,7 @@ class HomeControllerTest extends FunctionalTestCase
     /**
      * Test de l'affichage de la page d'accueil
      * - en tant qu'administrateur connecté
-     * - et de la présence des liens "Admin" et "Déconnexion"
+     * - et de la présence des liens "Admin" et "Déconnexion".
      */
     public function testShowHomeAsAdmin(): void
     {
@@ -50,7 +48,7 @@ class HomeControllerTest extends FunctionalTestCase
     /**
      * Test de l'affichage de la page d'accueil
      * - en tant que super administrateur connecté
-     * - et de la présence des liens "Admin" et "Déconnexion"
+     * - et de la présence des liens "Admin" et "Déconnexion".
      */
     public function testShowHomeAsSuperAdmin(): void
     {
@@ -62,7 +60,7 @@ class HomeControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Fonction pour vérifier l'affichage de la page d'accueil
+     * Fonction pour vérifier l'affichage de la page d'accueil.
      */
     private function canSeeHomePage(): void
     {
@@ -71,7 +69,7 @@ class HomeControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Fonction pour vérifier la présence des liens "Admin" et "Déconnexion"
+     * Fonction pour vérifier la présence des liens "Admin" et "Déconnexion".
      */
     private function canSeeAdminLinks(): void
     {
@@ -80,7 +78,7 @@ class HomeControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Fonction pour vérifier l'absence des liens "Admin" et "Déconnexion"
+     * Fonction pour vérifier l'absence des liens "Admin" et "Déconnexion".
      */
     private function cannotSeeAdminLinks(): void
     {

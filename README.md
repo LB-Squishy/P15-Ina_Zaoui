@@ -245,3 +245,17 @@ _Note : Le rapport doit être regénéré après chaque modification du code ou 
 ```bash
 start ./public/test-coverage/index.html
 ```
+
+### 2. Utilisation de CS Fixer
+
+**Checker le projet**:
+
+```bash
+docker compose exec php composer test:cs:check
+```
+
+**Fixer le projet**:
+
+```bash
+docker compose exec php composer test:cs:fix
+```
