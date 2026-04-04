@@ -10,7 +10,7 @@ use App\Tests\Functional\FunctionalTestCase;
 class PortfolioControllerTest extends FunctionalTestCase
 {
     /**
-     * Test de l'affichage de la page portfolio
+     * Test de l'affichage de la page portfolio.
      */
     public function testShowPortfolioPage(): void
     {
@@ -21,7 +21,7 @@ class PortfolioControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de l'affichage de la liste des albums
+     * Test de l'affichage de la liste des albums.
      */
     public function testShouldListAlbums(): void
     {
@@ -41,7 +41,7 @@ class PortfolioControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de l'affichage de tout les medias sur la page /portfolio (bouton "Toutes")
+     * Test de l'affichage de tout les medias sur la page /portfolio (bouton "Toutes").
      */
     public function testShouldListAllMedias(): void
     {
@@ -64,7 +64,7 @@ class PortfolioControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de renvoi à /portfolio si l'id de l'album est invalide
+     * Test de renvoi à /portfolio si l'id de l'album est invalide.
      */
     public function testBackToAllMediasIfBadAlbumId(): void
     {
@@ -90,7 +90,7 @@ class PortfolioControllerTest extends FunctionalTestCase
     /**
      * Test de l'affichage de tout les medias correspondant à un album sur la page /portfolio/{id}
      * - de la correspondance du nombre de médias affichés avec le nombre attendu
-     * - de la correspondance des titres des médias affichés avec les titres attendus
+     * - de la correspondance des titres des médias affichés avec les titres attendus.
      */
     public function testShouldListGoodMediasFromAlbum(): void
     {

@@ -33,7 +33,7 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface, Fixtur
                 $media->setTitle(sprintf('Titre %d', $fileIndex));
                 $manager->persist($media);
 
-                $fileIndex++;
+                ++$fileIndex;
             }
         }
 
@@ -48,7 +48,7 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface, Fixtur
                 $media->setTitle(sprintf('Titre %d', $titleIndex));
                 $manager->persist($media);
 
-                $fileIndex++;
+                ++$fileIndex;
             }
         }
 

@@ -7,10 +7,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SecurityControllerTest extends FunctionalTestCase
 {
-    /////////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE DE CONNEXION-----////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE DE CONNEXION-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de l'affichage de la page de connexion
+     * Test de l'affichage de la page de connexion.
      */
     public function testShowLoginPage(): void
     {
@@ -20,10 +20,10 @@ class SecurityControllerTest extends FunctionalTestCase
         $this->assertSelectorTextContains('h1', 'Connexion');
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST DE CONNEXION AVEC DES IDENTIFIANTS INCORRECTS-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST DE CONNEXION AVEC DES IDENTIFIANTS INCORRECTS-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de la tentative de connexion avec des identifiants incorrects
+     * Test de la tentative de connexion avec des identifiants incorrects.
      */
     public function testWithBadLoginShouldFail(): void
     {
@@ -50,10 +50,10 @@ class SecurityControllerTest extends FunctionalTestCase
         $this->assertResponseRedirects('/login');
     }
 
-    ///////////////////////////////////////////////////////////////////-----TEST DE CONNEXION EN TANT QUE SUPER ADMIN, ADMIN ET UTILISATEUR DESACTIVE-----////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////-----TEST DE CONNEXION EN TANT QUE SUPER ADMIN, ADMIN ET UTILISATEUR DESACTIVE-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de la tentative de connexion en tant que super admin
+     * Test de la tentative de connexion en tant que super admin.
      */
     public function testIfLoginAsSuperAdminIsSuccessful(): void
     {
@@ -83,7 +83,7 @@ class SecurityControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de la tentative de connexion en tant qu'admin
+     * Test de la tentative de connexion en tant qu'admin.
      */
     public function testIfLoginAsAdminIsSuccessful(): void
     {
@@ -114,7 +114,7 @@ class SecurityControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de la tentative de connexion en tant qu'utilisateur désactivé
+     * Test de la tentative de connexion en tant qu'utilisateur désactivé.
      */
     public function testIfAccessIsDeniedForDisabledUser(): void
     {

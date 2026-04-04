@@ -3,12 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Media;
+use App\Entity\User;
 use App\Form\MediaType;
 use App\Repository\MediaRepository;
 use App\Service\MediaStorage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route("/admin/media")]
@@ -21,7 +23,7 @@ class MediaController extends AbstractController
     ) {}
 
     #[Route("", name: "admin_media_index")]
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
 
@@ -42,12 +44,12 @@ class MediaController extends AbstractController
         return $this->render('admin/media/index.html.twig', [
             'medias' => $medias,
             'total' => $total,
-            'page' => $page
+            'page' => $page,
         ]);
     }
 
     #[Route("/add", name: "admin_media_add")]
-    public function add(Request $request)
+    public function add(Request $request): Response
     {
         $media = new Media();
         $form = $this->createForm(MediaType::class, $media, ['is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')]);
@@ -55,7 +57,11 @@ class MediaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
-                $media->setUser($this->getUser());
+                $user = $this->getUser();
+                if (!$user instanceof User) {
+                    throw $this->createAccessDeniedException();
+                }
+                $media->setUser($user);
             }
             $media->setPath('uploads/' . md5(uniqid()) . '.' . $media->getFile()->guessExtension());
             $media->getFile()->move($this->getParameter('kernel.project_dir') . '/public/uploads/', $media->getPath());
@@ -69,7 +75,7 @@ class MediaController extends AbstractController
     }
 
     #[Route("/delete/{id}", name: "admin_media_delete")]
-    public function delete(int $id)
+    public function delete(int $id): Response
     {
         $media = $this->mediaRepository->find($id);
         if (!$this->isGranted('ROLE_SUPER_ADMIN') && $media->getUser() !== $this->getUser()) {

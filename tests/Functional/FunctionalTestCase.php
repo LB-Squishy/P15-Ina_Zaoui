@@ -42,6 +42,7 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         return $this->service(EntityManagerInterface::class);
     }
+
     protected function service(string $id): object
     {
         return $this->client->getContainer()->get($id);
@@ -50,8 +51,9 @@ abstract class FunctionalTestCase extends WebTestCase
     /**
      * Effectue une requête GET vers l'URI spécifiée avec les paramètres optionnels.
      *
-     * @param string $uri L'URI de la requête
-     * @param array $parameters Les paramètres de la requête
+     * @param string               $uri        L'URI de la requête
+     * @param array<string, mixed> $parameters Les paramètres de la requête
+     *
      * @return Crawler Le crawler résultant de la requête
      */
     protected function get(string $uri, array $parameters = []): Crawler
@@ -71,6 +73,7 @@ abstract class FunctionalTestCase extends WebTestCase
 
         return $user;
     }
+
     /**
      * Connecte un super administrateur pour les tests fonctionnels.
      */
@@ -78,6 +81,7 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         return $this->loginUser('ina@zaoui.com');
     }
+
     /**
      * Connecte un administrateur pour les tests fonctionnels.
      */
@@ -85,6 +89,7 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         return $this->loginUser('invite+2@example.com');
     }
+
     /**
      * Connecte un utilisateur pour les tests fonctionnels.
      */
@@ -95,10 +100,11 @@ abstract class FunctionalTestCase extends WebTestCase
 
     /**
      * Soumet un formulaire en utilisant le texte du bouton et les données du formulaire.
-     * 
-     * @param string $buttonText Le texte du bouton de soumission du formulaire
-     * @param array $formData Les données à soumettre dans le formulaire
-     * @param string $methode La méthode HTTP à utiliser pour la soumission (par défaut 'POST')
+     *
+     * @param string               $buttonText Le texte du bouton de soumission du formulaire
+     * @param array<string, mixed> $formData   Les données à soumettre dans le formulaire
+     * @param string               $methode    La méthode HTTP à utiliser pour la soumission (par défaut 'POST')
+     *
      * @return Crawler Le crawler résultant de la soumission du formulaire
      */
     protected function submitForm(string $buttonText, array $formData, string $methode = 'POST'): Crawler

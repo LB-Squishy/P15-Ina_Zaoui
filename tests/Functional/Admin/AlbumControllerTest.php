@@ -7,10 +7,10 @@ use App\Tests\Functional\FunctionalTestCase;
 
 class AlbumControllerTest extends FunctionalTestCase
 {
-    ////////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE /ADMIN/ALBUM-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE /ADMIN/ALBUM-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de l'affichage de la page /admin/album pour un super admin
+     * Test de l'affichage de la page /admin/album pour un super admin.
      */
     public function testShowAdminAlbumPageForSuperAdmin(): void
     {
@@ -43,7 +43,7 @@ class AlbumControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de refus d'accès à la page /admin/album pour un admin
+     * Test de refus d'accès à la page /admin/album pour un admin.
      */
     public function testIfAccessDeniedForAdmin(): void
     {
@@ -53,7 +53,7 @@ class AlbumControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de refus d'accès à la page /admin/album pour un utilisateur désactivé
+     * Test de refus d'accès à la page /admin/album pour un utilisateur désactivé.
      */
     public function testIfAccessDeniedForUser(): void
     {
@@ -62,10 +62,10 @@ class AlbumControllerTest extends FunctionalTestCase
         $this->assertResponseStatusCodeSame(403);
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST D'AJOUT D'UN ALBUM-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST D'AJOUT D'UN ALBUM-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de l'ajout d'un album par un super admin
+     * Test de l'ajout d'un album par un super admin.
      */
     public function testAddAlbumAsSuperAdmin(): void
     {
@@ -99,9 +99,9 @@ class AlbumControllerTest extends FunctionalTestCase
         $this->assertContains('Test Album 9999', $albumNames, 'L\'album ajouté n\'est pas affiché dans la liste des albums.');
     }
 
-    ///////////////////////////////////////////////////////////////////-----TEST DE MISE À JOUR D'UN ALBUM-----////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////-----TEST DE MISE À JOUR D'UN ALBUM-----////////////////////////////////////////////////////////////////////
     /**
-     * Test de la mise à jour d'un album par un super admin
+     * Test de la mise à jour d'un album par un super admin.
      */
     public function testUpdateAlbumAsSuperAdmin(): void
     {
@@ -135,11 +135,11 @@ class AlbumControllerTest extends FunctionalTestCase
         $this->assertContains('Test Album Updated', $albumNames, 'L\'album ajouté n\'est pas affiché dans la liste des albums.');
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST DE SUPPRESSION D'UN ALBUM-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST DE SUPPRESSION D'UN ALBUM-----////////////////////////////////////////////////////////////////////
 
     /**
      * Test de la suppression d'un album sans media par un super admin
-     * - Test de suppression de l'album 6 qui n'est pas associé à un média
+     * - Test de suppression de l'album 6 qui n'est pas associé à un média.
      */
     public function testDeleteAlbumAsSuperAdmin(): void
     {

@@ -245,3 +245,39 @@ _Note : Le rapport doit être regénéré après chaque modification du code ou 
 ```bash
 start ./public/test-coverage/index.html
 ```
+
+### 2. Utilisation de CS Fixer
+
+**Checker le projet**:
+
+```bash
+docker compose exec php composer test:cs:check
+```
+
+**Fixer le projet**:
+
+```bash
+docker compose exec php composer test:cs:fix
+```
+
+### 3. Utilisation de PHP Stan
+
+**Lancer les tests**:
+
+```bash
+docker compose exec php composer test:phpstan
+```
+
+### 4. Réaliser l'intégralité des tests d'un tenant
+
+**Pour un test global rapide:**
+
+```bash
+docker compose exec php composer test:quick
+```
+
+**Pour un test global complet (avec reset de la db de test):**
+
+```bash
+docker compose exec php composer test:hard
+```

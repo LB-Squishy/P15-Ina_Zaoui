@@ -78,8 +78,32 @@ Veillez toujours à effectuez votre commit dans votre branche de travail en la n
 - feat(enUnMotDomaineDintervention): Description de votre intervention
 - ...
 
+**Appliquez cs-fixer**
+
+```bash
+docker compose exec php composer test:cs:fix
+```
+
+**Executer les tests PHPUnit**
+
+```bash
+docker compose exec php composer test:phpunit
+```
+
+**Executer les tests PHPStan**
+
+```bash
+docker compose exec php composer test:phpstan
+```
+
 Une fois le commit effectuez, vérifiez toujours la validation des tests lancés sur la branche qui vient d'être push sur github.
 _Chaque echec au test doit être examiné manuellement afin d'en déterminer la cause_
+
+**Si vous voulez effectuer un test global rapide avant chaque commit c'est l'idéal (cs-check + phpunit + phpstan):**
+
+```bash
+docker compose exec php composer test:quick
+```
 
 #### Pull Request
 
@@ -107,6 +131,15 @@ Ce test comprend :
 
 - La résolution des tests PHPUnit unitaires
 - La résolution des tests PHPUnit fonctionnels
+  Ce test est relancé à chaque merge afin de déceller toute problématique à chaque étapes par précaution.
+
+#### Analyse Statique
+
+Afin de déceller tout problème en amont, un test est effectué à chaque envoi sur la branche créé.
+Ce test comprend :
+
+- La résolution des tests PHP Stan de Niveau 6
+- La résolution d'un check par cs-fixer
   Ce test est relancé à chaque merge afin de déceller toute problématique à chaque étapes par précaution.
 
 #### Rapport de test ou test-coverage
