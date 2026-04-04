@@ -41,7 +41,7 @@ class MediaTestFixtures extends Fixture implements DependentFixtureInterface, Fi
                 $media->setTitle(sprintf('Titre %d', $fileIndex));
                 $manager->persist($media);
 
-                $fileIndex++;
+                ++$fileIndex;
             }
         }
 
@@ -56,7 +56,7 @@ class MediaTestFixtures extends Fixture implements DependentFixtureInterface, Fi
                 $media->setTitle(sprintf('Titre %d', $titleIndex));
                 $manager->persist($media);
 
-                $fileIndex++;
+                ++$fileIndex;
             }
         }
 

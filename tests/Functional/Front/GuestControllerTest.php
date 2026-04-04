@@ -9,7 +9,7 @@ use App\Tests\Functional\FunctionalTestCase;
 class GuestControllerTest extends FunctionalTestCase
 {
     /**
-     * Test de l'affichage de la page Invités
+     * Test de l'affichage de la page Invités.
      */
     public function testShowGuestsPage(): void
     {
@@ -20,7 +20,7 @@ class GuestControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de 404 si l'id de l'invité est invalide
+     * Test de 404 si l'id de l'invité est invalide.
      */
     public function testReturn404IfBadGuestId(): void
     {
@@ -29,7 +29,7 @@ class GuestControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de 404 si l'invité a son accès désactivé ('admin' => false)
+     * Test de 404 si l'invité a son accès désactivé ('admin' => false).
      */
     public function testReturn404IfInactiveGuestId(): void
     {
@@ -46,7 +46,7 @@ class GuestControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de 404 si on essai d'accéder à l'id d'un super_admin sur la page des invités ('super_admin' => true)
+     * Test de 404 si on essai d'accéder à l'id d'un super_admin sur la page des invités ('super_admin' => true).
      */
     public function testReturn404IfSuperAdminId(): void
     {
@@ -63,7 +63,7 @@ class GuestControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de l'affichage de la liste des invités sur la page /guests
+     * Test de l'affichage de la liste des invités sur la page /guests.
      */
     public function testShouldListGuests(): void
     {
@@ -104,7 +104,7 @@ class GuestControllerTest extends FunctionalTestCase
      * Test de l'affichage de la page d'un invité sur la page /guest/{id}
      * - de la correspondance du nom de l'invité affiché avec le nom attendu
      * - de la correspondance de la description de l'invité affiché avec la description attendue
-     * - de la correspondance des chemins des médias de l'invité affichés avec les chemins des médias de l'invité attendu
+     * - de la correspondance des chemins des médias de l'invité affichés avec les chemins des médias de l'invité attendu.
      */
     public function testShouldShowGuest(): void
     {

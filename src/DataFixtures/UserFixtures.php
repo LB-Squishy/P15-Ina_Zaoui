@@ -16,6 +16,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     }
 
     private UserPasswordHasherInterface $userPasswordHasher;
+
     public function __construct(UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->userPasswordHasher = $userPasswordHasher;
@@ -41,7 +42,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         foreach (range(1, 100) as $i) {
             $user = new User();
             $user->setSuperAdmin(false);
-            if ($i === 1) {
+            if (1 === $i) {
                 $user->setAdmin(false);
             } else {
                 $user->setAdmin(true);

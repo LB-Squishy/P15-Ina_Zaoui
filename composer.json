@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": "^8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/dbal": "^3",
@@ -91,7 +91,23 @@
             "@db:test:migrate",
             "@db:test:fixtures"
         ],
+        "test:cs:fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --ansi",
+        "test:cs:check": "php-cs-fixer check --config=.php-cs-fixer.dist.php --diff --ansi",
+        "test:cs:check:ci": "php-cs-fixer check --config=.php-cs-fixer.dist.php --diff --ansi --stop-on-violation --using-cache=no",
+        "test:phpstan": "vendor/bin/phpstan analyse --memory-limit=1G",
+        "test:phpstan:ci": "vendor/bin/phpstan analyse --memory-limit=1G --no-progress --error-format=github",
         "test:phpunit": "phpunit --testdox --colors=always",
+        "test:quick": [
+            "@test:cs:check",
+            "@test:phpstan",
+            "@test:phpunit"
+        ],
+        "test:hard": [
+            "@test:cs:check",
+            "@test:phpstan",
+            "@db:test:reset",
+            "@test:phpunit"
+        ],
         "test:phpunit:ci": [
             "@db:test:reset",
             "@test:phpunit"
@@ -120,6 +136,11 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^8.2",
         "doctrine/doctrine-fixtures-bundle": "^3.6",
+        "friendsofphp/php-cs-fixer": "^3.94",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
         "phpunit/phpunit": "^12.5",
         "symfony/browser-kit": "*",
         "symfony/css-selector": "*",

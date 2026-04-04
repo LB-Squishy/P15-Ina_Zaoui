@@ -7,10 +7,10 @@ use App\Tests\Functional\FunctionalTestCase;
 
 class GuestControllerTest extends FunctionalTestCase
 {
-    /////////////////////////////////////////////////////////////////////-----TEST D'ACCES À LA PAGE DE GESTION DES INVITÉS-----////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////-----TEST D'ACCES À LA PAGE DE GESTION DES INVITÉS-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de l'accès à la page /admin/guest pour un super admin
+     * Test de l'accès à la page /admin/guest pour un super admin.
      */
     public function testAccessAdminGuestPageForSuperAdmin(): void
     {
@@ -20,7 +20,7 @@ class GuestControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de refus d'accès à la page /admin/guest pour un admin
+     * Test de refus d'accès à la page /admin/guest pour un admin.
      */
     public function testIfAccessDeniedForAdmin(): void
     {
@@ -30,7 +30,7 @@ class GuestControllerTest extends FunctionalTestCase
     }
 
     /**
-     * Test de refus d'accès à la page /admin/guest pour un utilisateur désactivé
+     * Test de refus d'accès à la page /admin/guest pour un utilisateur désactivé.
      */
     public function testIfAccessDeniedForUser(): void
     {
@@ -39,10 +39,10 @@ class GuestControllerTest extends FunctionalTestCase
         $this->assertResponseStatusCodeSame(403);
     }
 
-    /////////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE DE GESTION DES INVITÉS-----////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////-----TEST D'AFFICHAGE DE LA PAGE DE GESTION DES INVITÉS-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de l'affichage de la page /admin/guest pour un super admin
+     * Test de l'affichage de la page /admin/guest pour un super admin.
      */
     public function testGuestPageCount(): void
     {
@@ -62,7 +62,7 @@ class GuestControllerTest extends FunctionalTestCase
         $lastPageLink = $crawler
             ->filter('ul.pagination a.page-link')
             ->last();
-        if ($lastPageLink->text() !== "Dernière page") {
+        if ("Dernière page" !== $lastPageLink->text()) {
             $guestPageCount = 1;
         } else {
             $guestPageCount = (int) str_replace('/admin/guest?page=', '', $lastPageLink->attr('href'));
@@ -70,10 +70,10 @@ class GuestControllerTest extends FunctionalTestCase
         $this->assertSame($expectedGuestPageCount, $guestPageCount, 'Le nombre de pages affichées ne correspond pas au nombre de pages attendu.');
     }
 
-    /////////////////////////////////////////////////////////////////////-----TEST DE REVOCATION DES DROITS D'ACCES D'INVITÉ-----////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////-----TEST DE REVOCATION DES DROITS D'ACCES D'INVITÉ-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de la révocation des droits d'accès d'un invité par un super admin
+     * Test de la révocation des droits d'accès d'un invité par un super admin.
      */
     public function testRevokeGuestAccessBySuperAdmin(): void
     {
@@ -89,7 +89,7 @@ class GuestControllerTest extends FunctionalTestCase
 
         // Récupère le lien de révocation du deuxième invité de la liste
         $guestLink = $crawler->filter('table tbody tr td:nth-child(3) a')->eq(1);
-        $this->assertNotNull($guestLink, 'Le lien de révocation du deuxième invité n\'a pas été trouvé.');
+        $this->assertGreaterThan(0, $guestLink->count(), 'Le lien de révocation du deuxième invité n\'a pas été trouvé.');
 
         // Révoque les droits d'accès du deuxième invité de la liste
         $this->client->click($guestLink->link());
@@ -107,10 +107,10 @@ class GuestControllerTest extends FunctionalTestCase
         $this->assertResponseStatusCodeSame(403, 'L\'invité a encore accès à la page /admin/media après la révocation de ses droits d\'accès.');
     }
 
-    /////////////////////////////////////////////////////////////////////-----TEST DE SUPPRESSION D'INVITÉ-----////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////-----TEST DE SUPPRESSION D'INVITÉ-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de la suppression d'un invité par un super admin
+     * Test de la suppression d'un invité par un super admin.
      */
     public function testDeleteGuestBySuperAdmin(): void
     {
@@ -120,7 +120,7 @@ class GuestControllerTest extends FunctionalTestCase
 
         // Récupère le lien de suppression du deuxième invité de la liste
         $guestLink = $crawler->filter('table tbody tr td:nth-child(4) a')->eq(1);
-        $this->assertNotNull($guestLink, 'Le lien de suppression du deuxième invité n\'a pas été trouvé.');
+        $this->assertGreaterThan(0, $guestLink->count(), 'Le lien de suppression du deuxième invité n\'a pas été trouvé.');
 
         // Supprime le deuxième invité de la liste
         $this->client->click($guestLink->link());
@@ -133,10 +133,10 @@ class GuestControllerTest extends FunctionalTestCase
         $this->assertNull($deletedGuest, 'L\'invité n\'a pas été supprimé.');
     }
 
-    ////////////////////////////////////////////////////////////////////-----TEST D'AJOUT D'UN INVITÉ-----////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////-----TEST D'AJOUT D'UN INVITÉ-----////////////////////////////////////////////////////////////////////
 
     /**
-     * Test de l'ajout d'un invité par un super admin
+     * Test de l'ajout d'un invité par un super admin.
      */
     public function testAddGuestBySuperAdmin(): void
     {
@@ -144,7 +144,7 @@ class GuestControllerTest extends FunctionalTestCase
         $this->get('/admin/guest/add');
         $this->assertResponseIsSuccessful();
 
-        //Soumet le formulaire d'ajout d'invité
+        // Soumet le formulaire d'ajout d'invité
         $this->submitForm('Ajouter', [
             'guest[name]' => 'Test Invité 9999',
             'guest[description]' => 'Description du Test Invité 9999',
