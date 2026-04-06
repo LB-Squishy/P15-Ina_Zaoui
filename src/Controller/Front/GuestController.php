@@ -23,11 +23,9 @@ class GuestController extends AbstractController
 
         $criteria = ['super_admin' => false, 'admin' => true];
 
-        $guests = $this->userRepository->findBy(
-            $criteria,
-            ['id' => 'ASC'],
-            5,
-            5 * ($page - 1)
+        $guests = $this->userRepository->findAdminGuestsWithMediaCount(
+            10,
+            10 * ($page - 1)
         );
         $total = $this->userRepository->count($criteria);
 
