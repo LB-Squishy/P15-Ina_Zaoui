@@ -87,13 +87,16 @@ class GuestControllerTest extends FunctionalTestCase
         // Récupère le nom des invités et le nombre de medias attendus par invités depuis la BDD
         $expectedGuests = $this
             ->service(UserRepository::class)
-            ->findBy(['super_admin' => false, 'admin' => true], ['id' => 'ASC'], 5, 0);
+            ->findAdminGuestsWithMediaCount(
+                10,
+                0
+            );
 
         $expectedGuestsNames = [];
         $expectedGuestsMediasCount = [];
         foreach ($expectedGuests as $expectedGuest) {
-            $expectedGuestsNames[] = $expectedGuest->getName();
-            $expectedGuestsMediasCount[] = $expectedGuest->getMedias()->count();
+            $expectedGuestsNames[] = $expectedGuest['name'];
+            $expectedGuestsMediasCount[] = $expectedGuest['mediasCount'];
         }
 
         $this->assertSame($expectedGuestsNames, $guestNames, 'Le nom des invités affichés ne correspond pas au nom des invités attendus.');
